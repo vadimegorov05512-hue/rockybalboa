@@ -310,10 +310,14 @@ h1 {
   left: calc(8px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 13px);
   bottom: calc(18vh + 28px);
   z-index: 3;
-  font-size: 1.45rem;
-  line-height: 1;
-  filter: brightness(1.08) drop-shadow(0 0 4px rgba(255, 255, 255, 0.2)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
   transition: left 0.42s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.ball-image {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
 }
 
 .revealed-ball {
@@ -479,8 +483,12 @@ h1 {
   }
 
   .ball {
-    font-size: 1.28rem;
     bottom: calc(16vh + 24px);
+  }
+
+  .ball-image {
+    width: 24px;
+    height: 24px;
   }
 
   .game-bottom-spacer {
@@ -515,6 +523,11 @@ h1 {
 
   .ball {
     bottom: calc(17vh + 26px);
+  }
+
+  .ball-image {
+    width: 28px;
+    height: 28px;
   }
 }
 
@@ -555,5 +568,10 @@ h1 {
 
   .ball {
     bottom: 164px;
+  }
+
+  .ball-image {
+    width: 32px;
+    height: 32px;
   }
 }

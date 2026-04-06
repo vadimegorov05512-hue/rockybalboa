@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import thimbleImg from './assets/thimble-new-cutout.png'
 import sceneBg from './assets/street-scene-vertical.jpg'
+import ballImg from './assets/ball-cutout.png'
 import './App.css'
 
 type Phase = 'idle' | 'preview' | 'shuffling' | 'guess' | 'result'
@@ -213,9 +214,7 @@ function App() {
             )}
 
             {(phase === 'idle' || phase === 'preview') && (
-              <div className="ball" aria-hidden="true" style={{ ['--slot' as string]: ballPosition } as CSSProperties}>
-                ⚪
-              </div>
+              <img className="ball ball-image" src={ballImg} alt="" aria-hidden="true" style={{ ['--slot' as string]: ballPosition } as CSSProperties} />
             )}
 
             <div className="cups-stage mobile-cups-stage">
@@ -234,9 +233,7 @@ function App() {
                     <span className="cup-shadow" />
                     <img className="thimble-image mobile-thimble-image" src={thimbleImg} alt="" aria-hidden="true" />
                     {phase === 'result' && cup.id === ballCupId && (
-                      <span className="ball revealed-ball" aria-hidden="true">
-                        ⚪
-                      </span>
+                      <img className="ball revealed-ball ball-image" src={ballImg} alt="" aria-hidden="true" />
                     )}
                   </button>
                 )
