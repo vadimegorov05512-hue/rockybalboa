@@ -198,6 +198,10 @@ function App() {
         <section className="game-panel">
 
           <div className="game-scene-block">
+            <div className={`wallet-badge ${phase === 'result' ? (selectedCupId === ballCupId ? 'win' : 'lose') : ''}`}>
+              Гребни: <strong>{score.crebni}</strong>
+            </div>
+
             {phase === 'idle' && (
               <div className="start-instruction">
                 Нажми «Старт», я покажу шарик, потом перемешаю напёрстки.
@@ -225,6 +229,11 @@ function App() {
                     <img className="thimble-image mobile-thimble-image" src={thimbleImg} alt="" aria-hidden="true" />
                     {phase === 'result' && cup.id === ballCupId && (
                       <img className="ball revealed-ball ball-image" src={ballImg} alt="" aria-hidden="true" />
+                    )}
+                    {phase === 'result' && selectedCupId === cup.id && (
+                      <span className={`result-burst ${selectedCupId === ballCupId ? 'win' : 'lose'}`}>
+                        {selectedCupId === ballCupId ? `+${score.bet}` : `-${score.bet}`}
+                      </span>
                     )}
                   </button>
                 )

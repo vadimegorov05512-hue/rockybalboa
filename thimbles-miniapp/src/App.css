@@ -194,9 +194,32 @@ h1 {
   overflow: hidden;
 }
 
-.start-instruction {
+.wallet-badge {
   position: absolute;
   top: 0;
+  left: 12px;
+  z-index: 4;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #f4f6f2;
+  background: rgba(20, 22, 20, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.wallet-badge.win {
+  background: rgba(48, 110, 72, 0.72);
+}
+
+.wallet-badge.lose {
+  background: rgba(126, 58, 58, 0.72);
+}
+
+.start-instruction {
+  position: absolute;
+  top: 44px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 4;
@@ -303,6 +326,28 @@ h1 {
   filter: grayscale(0.18) brightness(0.82) drop-shadow(0 16px 18px rgba(0, 0, 0, 0.34));
 }
 
+.result-burst {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #fff;
+  animation: burst-pop 0.45s ease;
+}
+
+.result-burst.win {
+  background: rgba(48, 110, 72, 0.9);
+}
+
+.result-burst.lose {
+  background: rgba(126, 58, 58, 0.9);
+}
+
 .game-bottom-spacer {
   height: 112px;
 }
@@ -406,6 +451,17 @@ h1 {
   }
   to {
     transform: translateY(-8px);
+  }
+}
+
+@keyframes burst-pop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
