@@ -5,7 +5,7 @@ import ballImg from './assets/ball-cutout.png'
 import './App.css'
 
 type Phase = 'idle' | 'preview' | 'shuffling' | 'guess' | 'result'
-type Tab = 'game' | 'stats'
+type Tab = 'game' | 'history' | 'stats'
 
 type CupState = {
   id: number
@@ -19,9 +19,18 @@ type Score = {
   bet: number
 }
 
+type BetHistoryItem = {
+  round: number
+  bet: number
+  delta: number
+  result: 'win' | 'lose'
+}
+
 const SHUFFLE_MOVES = 7
 const SHUFFLE_STEP_MS = 420
 const PREVIEW_MS = 1500
+const BET_MIN = 10
+const BET_MAX = 200
 
 const initialCups = (): CupState[] => [
   { id: 0, x: 0 },
@@ -46,7 +55,6 @@ function App() {
   const [ballCupId, setBallCupId] = useState<number>(1)
   const [phase, setPhase] = useState<Phase>('idle')
   const [activeTab, setActiveTab] = useState<Tab>('game')
-  const isStatsTab = activeTab === 'stats'
   const [round, setRound] = useState(1)
   const [selectedCupId, setSelectedCupId] = useState<number | null>(null)
   const [score, setScore] = useState<Score>({
@@ -55,10 +63,14 @@ function App() {
     crebni: 1000,
     bet: 50,
   })
+  const [history, setHistory] = useState<BetHistoryItem[]>([])
   const [, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
   const [, setShowIntro] = useState(true)
 
   const timeoutRef = useRef<number | null>(null)
+
+  const isHistoryTab = activeTab === 'history'
+  const isStatsTab = activeTab === 'stats'
 
   const ballPosition = useMemo(
     () => cups.find((cup) => cup.id === ballCupId)?.x ?? 1,
@@ -173,9 +185,18 @@ function App() {
     setScore((current) => ({
       wins: current.wins + (won ? 1 : 0),
       losses: current.losses + (won ? 0 : 1),
-      crebni: current.crebni + (won ? current.bet : -current.bet),
+      crebni: current.crebni + (won ? current.bet * 2 : -current.bet),
       bet: current.bet,
     }))
+    setHistory((current) => [
+      {
+        round,
+        bet: score.bet,
+        delta: won ? score.bet * 2 : -score.bet,
+        result: won ? ('win' as const) : ('lose' as const),
+      },
+      ...current,
+    ].slice(0, 12))
   }
 
   const nextRound = () => {
@@ -189,19 +210,15 @@ function App() {
       <div className="scene-overlay" />
 
       <section className="top-tabs-card compact-top-card">
-        <div className="top-strip">
+        <div className="top-strip top-strip-split">
           <div className="round-badge">Раунд {round}</div>
+          <div className="wallet-badge top-wallet-badge">Гребни: <strong>{score.crebni}</strong></div>
         </div>
       </section>
 
-      {!isStatsTab ? (
+      {!isHistoryTab && !isStatsTab ? (
         <section className="game-panel">
-
           <div className="game-scene-block">
-            <div className={`wallet-badge ${phase === 'result' ? (selectedCupId === ballCupId ? 'win' : 'lose') : ''}`}>
-              Гребни: <strong>{score.crebni}</strong>
-            </div>
-
             {phase === 'idle' && (
               <div className="start-instruction">
                 Нажми «Старт», я покажу шарик, потом перемешаю напёрстки.
@@ -232,7 +249,7 @@ function App() {
                     )}
                     {phase === 'result' && selectedCupId === cup.id && (
                       <span className={`result-burst ${selectedCupId === ballCupId ? 'win' : 'lose'}`}>
-                        {selectedCupId === ballCupId ? `+${score.bet}` : `-${score.bet}`}
+                        {selectedCupId === ballCupId ? `+${score.bet * 2}` : `-${score.bet}`}
                       </span>
                     )}
                   </button>
@@ -242,6 +259,25 @@ function App() {
           </div>
 
           <div className="game-bottom-spacer" />
+        </section>
+      ) : isHistoryTab ? (
+        <section className="stats-panel floating-panel">
+          <div className="stats-grid-single">
+            {history.length === 0 ? (
+              <article className="stat-card">
+                <span>История ставок</span>
+                <strong>Пока пусто</strong>
+              </article>
+            ) : (
+              history.map((item, index) => (
+                <article key={`${item.round}-${index}`} className={`stat-card history-card ${item.result}`}>
+                  <span>Раунд {item.round}</span>
+                  <strong>{item.result === 'win' ? `+${item.delta}` : `${item.delta}`}</strong>
+                  <small>Ставка: {item.bet}</small>
+                </article>
+              ))
+            )}
+          </div>
         </section>
       ) : (
         <section className="stats-panel floating-panel">
@@ -265,23 +301,22 @@ function App() {
           </div>
         </section>
       )}
-      <div className="persistent-tabs floating-panel unified-bottom-dock">
-        {!isStatsTab && (
-          <>
-            <div className="bet-row">
-              {[10, 25, 50, 100].map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  className={`bet-chip ${score.bet === value ? 'active' : ''}`}
-                  onClick={() => setScore((current) => ({ ...current, bet: value }))}
-                >
-                  {value}
-                </button>
-              ))}
-            </div>
 
-            <div className="wallet-line">Гребни: <strong>{score.crebni}</strong>, ставка: <strong>{score.bet}</strong></div>
+      <div className="persistent-tabs floating-panel unified-bottom-dock">
+        {!isHistoryTab && !isStatsTab && (
+          <>
+            <div className="slider-block">
+              <input
+                className="bet-slider"
+                type="range"
+                min={BET_MIN}
+                max={BET_MAX}
+                step={5}
+                value={score.bet}
+                onChange={(e) => setScore((current) => ({ ...current, bet: Number(e.target.value) }))}
+              />
+              <div className="wallet-line">Ставка: <strong>{score.bet}</strong> гребней</div>
+            </div>
 
             <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow} disabled={!canPlay}>
               {phase === 'idle' && (canPlay ? 'Старт' : 'Не хватает гребней')}
@@ -301,17 +336,24 @@ function App() {
         <div className="telegram-tabs bottom-tabs dock-tabs">
           <button
             type="button"
-            className={`telegram-tab ${!isStatsTab ? 'active' : ''}`}
+            className={`telegram-tab ${!isHistoryTab && !isStatsTab ? 'active' : ''}`}
             onClick={() => setActiveTab('game' as Tab)}
           >
             Игра
           </button>
           <button
             type="button"
+            className={`telegram-tab ${isHistoryTab ? 'active' : ''}`}
+            onClick={() => setActiveTab('history' as Tab)}
+          >
+            История
+          </button>
+          <button
+            type="button"
             className={`telegram-tab ${isStatsTab ? 'active' : ''}`}
             onClick={() => setActiveTab('stats' as Tab)}
           >
-            Статистика
+            Статы
           </button>
         </div>
       </div>

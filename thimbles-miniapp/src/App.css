@@ -26,7 +26,8 @@ body {
   touch-action: manipulation;
 }
 
-button {
+button,
+input {
   font: inherit;
 }
 
@@ -38,7 +39,7 @@ button {
 }
 
 .full-screen-app {
-  padding: 12px 10px calc(196px + env(safe-area-inset-bottom));
+  padding: 12px 10px calc(220px + env(safe-area-inset-bottom));
 }
 
 .scene-background,
@@ -51,7 +52,6 @@ button {
   background-position: center top;
   background-size: auto 100%;
   background-repeat: no-repeat;
-  transform: scale(1);
 }
 
 .scene-overlay {
@@ -89,48 +89,37 @@ button {
 
 .top-strip {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   width: 100%;
 }
 
-.round-badge {
+.top-strip-split {
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.round-badge,
+.wallet-badge {
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(22, 24, 22, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   color: #f4f6f2;
   white-space: nowrap;
   font-size: 0.78rem;
   box-shadow: none;
 }
 
-.eyebrow,
-h1 {
-  display: none;
+.round-badge {
+  background: rgba(22, 24, 22, 0.18);
 }
 
-.telegram-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  padding: 4px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.025);
+.wallet-badge {
+  background: rgba(22, 24, 22, 0.3);
 }
 
-.telegram-tab {
-  min-height: 40px;
-  border: 0;
-  border-radius: 12px;
-  background: transparent;
-  color: #bfc5bc;
-}
-
-.telegram-tab.active {
-  background: rgba(255, 255, 255, 0.06);
-  color: #f4f6f2;
-  font-weight: 700;
+.top-wallet-badge {
+  position: static;
+  z-index: 2;
 }
 
 .game-panel,
@@ -139,87 +128,19 @@ h1 {
   z-index: 2;
 }
 
-.mobile-status-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 16px;
-  margin-bottom: 10px;
-}
-
-.mobile-status-card p,
-.mobile-status-card small {
-  margin: 0;
-}
-
-.mobile-status-card p {
-  color: #edf1ea;
-  font-size: 0.92rem;
-}
-
-.mobile-status-card small {
-  color: #9ca39a;
-  font-size: 0.76rem;
-}
-
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: #879087;
-  box-shadow: 0 0 10px rgba(162, 174, 162, 0.3);
-  flex: 0 0 auto;
-}
-
-.status-dot.shuffling {
-  background: #beaa7f;
-}
-
-.status-dot.guess {
-  background: #8a9d72;
-}
-
-.status-dot.result {
-  background: #a57c7c;
-}
-
 .game-scene-block {
   position: relative;
   z-index: 2;
-  height: calc(100vh - 220px - env(safe-area-inset-bottom));
+  height: calc(100vh - 240px - env(safe-area-inset-bottom));
   min-height: 320px;
-  max-height: calc(100vh - 220px - env(safe-area-inset-bottom));
+  max-height: calc(100vh - 240px - env(safe-area-inset-bottom));
   margin-bottom: 8px;
   overflow: hidden;
 }
 
-.wallet-badge {
-  position: absolute;
-  top: 0;
-  left: 12px;
-  z-index: 4;
-  padding: 8px 12px;
-  border-radius: 999px;
-  color: #f4f6f2;
-  background: rgba(20, 22, 20, 0.58);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  font-size: 0.86rem;
-  font-weight: 600;
-}
-
-.wallet-badge.win {
-  background: rgba(48, 110, 72, 0.72);
-}
-
-.wallet-badge.lose {
-  background: rgba(126, 58, 58, 0.72);
-}
-
 .start-instruction {
   position: absolute;
-  top: 44px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 4;
@@ -235,8 +156,6 @@ h1 {
   font-size: 0.86rem;
   font-weight: 500;
 }
-
-
 
 .cups-stage {
   position: absolute;
@@ -370,7 +289,8 @@ h1 {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.stat-card span {
+.stat-card span,
+.stat-card small {
   display: block;
   color: #9ca39a;
   font-size: 0.78rem;
@@ -384,6 +304,14 @@ h1 {
 
 .stat-card.premium {
   background: rgba(30, 34, 30, 0.56);
+}
+
+.history-card.win strong {
+  color: #81e29d;
+}
+
+.history-card.lose strong {
+  color: #ff8f8f;
 }
 
 .persistent-tabs {
@@ -403,9 +331,36 @@ h1 {
   gap: 10px;
 }
 
-.dock-tabs {
-  margin-top: 0;
-  flex: 0 0 auto;
+.slider-block {
+  display: grid;
+  gap: 8px;
+}
+
+.bet-slider {
+  width: 100%;
+}
+
+.telegram-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 4px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.telegram-tab {
+  min-height: 40px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #bfc5bc;
+}
+
+.telegram-tab.active {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f4f6f2;
+  font-weight: 700;
 }
 
 .mobile-primary {
@@ -440,9 +395,13 @@ h1 {
   color: #edf1e9;
 }
 
-.dock-hint-block {
-  padding: 0 4px;
-  flex: 0 0 auto;
+.wallet-line {
+  color: #eef2ec;
+  font-size: 0.88rem;
+}
+
+.wallet-line strong {
+  color: #ffffff;
 }
 
 @keyframes floaty {
@@ -476,23 +435,6 @@ h1 {
     max-height: calc(100vh - 222px - env(safe-area-inset-bottom));
   }
 
-  .phase-banner {
-    width: calc(100% - 12px);
-    font-size: 0.82rem;
-    padding: 8px 10px;
-  }
-
-  .preview-banner {
-    width: calc(100% - 16px);
-    top: 42px;
-    font-size: 0.76rem;
-    padding: 8px 10px;
-  }
-
-  .game-scene-block {
-    min-height: 52vh;
-  }
-
   .cups-stage {
     bottom: 12vh;
     height: 188px;
@@ -513,15 +455,6 @@ h1 {
   .ball-image {
     width: 24px;
     height: 24px;
-  }
-
-  .game-bottom-spacer {
-    height: 104px;
-  }
-
-  .mobile-primary {
-    min-height: 46px;
-    font-size: 0.95rem;
   }
 }
 
@@ -600,33 +533,4 @@ h1 {
     width: 32px;
     height: 32px;
   }
-}
-
-.bet-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-
-.bet-chip {
-  min-height: 36px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.05);
-  color: #eef2ec;
-}
-
-.bet-chip.active {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.22);
-  font-weight: 700;
-}
-
-.wallet-line {
-  color: #eef2ec;
-  font-size: 0.88rem;
-}
-
-.wallet-line strong {
-  color: #ffffff;
 }
