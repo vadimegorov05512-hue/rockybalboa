@@ -8,6 +8,12 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -19,17 +25,13 @@ button {
   font: inherit;
 }
 
-#root {
-  min-height: 100vh;
-}
-
 .app-shell {
   position: relative;
   min-height: 100vh;
 }
 
 .full-screen-app {
-  padding: 14px 12px calc(170px + env(safe-area-inset-bottom));
+  padding: 12px 10px calc(176px + env(safe-area-inset-bottom));
 }
 
 .scene-background,
@@ -47,7 +49,7 @@ button {
 
 .scene-overlay {
   background:
-    linear-gradient(180deg, rgba(8, 8, 8, 0.22) 0%, rgba(10, 10, 10, 0.12) 18%, rgba(12, 12, 12, 0.24) 64%, rgba(8, 8, 8, 0.5) 100%),
+    linear-gradient(180deg, rgba(8, 8, 8, 0.16) 0%, rgba(10, 10, 10, 0.08) 18%, rgba(12, 12, 12, 0.18) 64%, rgba(8, 8, 8, 0.42) 100%),
     radial-gradient(circle at center top, rgba(255, 244, 217, 0.08), transparent 28%);
 }
 
@@ -82,20 +84,7 @@ button {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background: transparent;
-}
-
-.mobile-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.eyebrow,
-h1 {
-  display: none;
+  width: 100%;
 }
 
 .round-badge {
@@ -107,6 +96,11 @@ h1 {
   white-space: nowrap;
   font-size: 0.78rem;
   box-shadow: none;
+}
+
+.eyebrow,
+h1 {
+  display: none;
 }
 
 .telegram-tabs {
@@ -186,30 +180,8 @@ h1 {
 .game-scene-block {
   position: relative;
   z-index: 2;
-  min-height: 58vh;
-  margin-bottom: 10px;
-}
-
-.preview-banner {
-  position: absolute;
-  top: 44px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  width: calc(100% - 24px);
-  max-width: 320px;
-  padding: 9px 12px;
-  text-align: center;
-  border-radius: 999px;
-  background: rgba(17, 19, 17, 0.48);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  color: #dfe5db;
-  font-size: 0.84rem;
-  backdrop-filter: blur(8px);
-}
-
-.preview-banner strong {
-  color: #f1f3ef;
+  min-height: 56vh;
+  margin-bottom: 8px;
 }
 
 .phase-banner {
@@ -227,7 +199,7 @@ h1 {
   background: rgba(20, 22, 20, 0.58);
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(8px);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
 }
 
@@ -241,6 +213,28 @@ h1 {
 
 .phase-banner.lose {
   background: rgba(126, 58, 58, 0.72);
+}
+
+.preview-banner {
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: calc(100% - 24px);
+  max-width: 320px;
+  padding: 9px 12px;
+  text-align: center;
+  border-radius: 999px;
+  background: rgba(17, 19, 17, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #dfe5db;
+  font-size: 0.82rem;
+  backdrop-filter: blur(8px);
+}
+
+.preview-banner strong {
+  color: #f1f3ef;
 }
 
 .cups-stage {
@@ -291,7 +285,7 @@ h1 {
 .thimble-image {
   position: relative;
   z-index: 2;
-  width: clamp(114px, 31vw, 150px);
+  width: clamp(110px, 31vw, 146px);
   height: auto;
   object-fit: contain;
   transform: translateY(8px);
@@ -327,74 +321,8 @@ h1 {
   filter: grayscale(0.18) brightness(0.82) drop-shadow(0 16px 18px rgba(0, 0, 0, 0.34));
 }
 
-.mobile-controls {
-  display: grid;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 16px;
-}
-
-.bottom-tabs {
-  margin-top: 2px;
-}
-
-.persistent-tabs {
-  position: fixed;
-  left: 12px;
-  right: 12px;
-  bottom: calc(12px + env(safe-area-inset-bottom));
-  z-index: 999;
-  margin-top: 0;
-  border-radius: 18px;
-}
-
-.unified-bottom-dock {
-  padding: 10px;
-  display: grid;
-  gap: 10px;
-}
-
-.dock-tabs {
-  margin-top: 0;
-}
-
-.dock-hint-block {
-  padding: 0 4px;
-}
-
 .game-bottom-spacer {
-  height: 110px;
-}
-
-.primary {
-  width: 100%;
-  min-height: 52px;
-  border: 0;
-  border-radius: 14px;
-  padding: 14px 18px;
-  font-weight: 800;
-  font-size: 1rem;
-  color: #101310;
-  background: linear-gradient(180deg, #c8cec4 0%, #8f968d 100%);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
-  cursor: pointer;
-}
-
-.hint-block {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-.hint-block span {
-  color: #889086;
-  font-size: 0.78rem;
-}
-
-.hint-block strong {
-  font-size: 0.92rem;
-  color: #edf1e9;
+  height: 112px;
 }
 
 .stats-panel {
@@ -431,6 +359,61 @@ h1 {
   background: rgba(30, 34, 30, 0.56);
 }
 
+.persistent-tabs {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 999;
+  margin-top: 0;
+  border-radius: 18px;
+}
+
+.unified-bottom-dock {
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.dock-tabs {
+  margin-top: 0;
+}
+
+.mobile-primary {
+  width: 100%;
+  min-height: 50px;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #101310;
+  background: linear-gradient(180deg, #c8cec4 0%, #8f968d 100%);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+}
+
+.hint-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.hint-block span {
+  color: #889086;
+  font-size: 0.78rem;
+}
+
+.hint-block strong {
+  font-size: 0.92rem;
+  color: #edf1e9;
+}
+
+.dock-hint-block {
+  padding: 0 4px;
+}
+
 @keyframes floaty {
   from {
     transform: translateY(0);
@@ -440,12 +423,76 @@ h1 {
   }
 }
 
-@media (min-width: 721px) {
-  .scene-background {
-    background-size: auto 100%;
-    background-position: center top;
+@media (max-width: 389px) {
+  .full-screen-app {
+    padding: 10px 8px calc(170px + env(safe-area-inset-bottom));
   }
 
+  .phase-banner {
+    width: calc(100% - 12px);
+    font-size: 0.82rem;
+    padding: 8px 10px;
+  }
+
+  .preview-banner {
+    width: calc(100% - 16px);
+    top: 42px;
+    font-size: 0.76rem;
+    padding: 8px 10px;
+  }
+
+  .game-scene-block {
+    min-height: 52vh;
+  }
+
+  .cups-stage {
+    bottom: 6vh;
+    height: 210px;
+  }
+
+  .cup {
+    height: 210px;
+  }
+
+  .thimble-image {
+    width: clamp(92px, 29vw, 118px);
+  }
+
+  .ball {
+    font-size: 1.28rem;
+    bottom: calc(6vh + 30px);
+  }
+
+  .game-bottom-spacer {
+    height: 104px;
+  }
+
+  .mobile-primary {
+    min-height: 46px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 390px) and (max-width: 459px) {
+  .game-scene-block {
+    min-height: 56vh;
+  }
+
+  .cups-stage {
+    bottom: 8vh;
+    height: 240px;
+  }
+
+  .cup {
+    height: 236px;
+  }
+
+  .thimble-image {
+    width: clamp(104px, 30vw, 132px);
+  }
+}
+
+@media (min-width: 460px) {
   .full-screen-app {
     max-width: 560px;
     margin: 0 auto;
@@ -473,5 +520,9 @@ h1 {
 
   .thimble-image {
     width: clamp(124px, 18vw, 154px);
+  }
+
+  .ball {
+    bottom: 92px;
   }
 }
