@@ -284,6 +284,23 @@ function App() {
               <strong>{accuracy}</strong>
             </article>
           </div>
+
+          <div className="telegram-tabs bottom-tabs stats-bottom-tabs">
+            <button
+              type="button"
+              className={`telegram-tab ${!isStatsTab ? 'active' : ''}`}
+              onClick={() => setActiveTab('game' as Tab)}
+            >
+              Игра
+            </button>
+            <button
+              type="button"
+              className={`telegram-tab ${isStatsTab ? 'active' : ''}`}
+              onClick={() => setActiveTab('stats' as Tab)}
+            >
+              Статистика
+            </button>
+          </div>
         </section>
       )}
     </main>
