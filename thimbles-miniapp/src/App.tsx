@@ -17,6 +17,7 @@ type Score = {
   losses: number
   crebni: number
   bet: number
+  lockedBet: number
 }
 
 type BetHistoryItem = {
@@ -62,6 +63,7 @@ function App() {
     losses: 0,
     crebni: 1000,
     bet: 50,
+    lockedBet: 50,
   })
   const [history, setHistory] = useState<BetHistoryItem[]>([])
   const [, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
@@ -132,6 +134,7 @@ function App() {
     setShowIntro(false)
     setSelectedCupId(null)
     setCups(initialCups())
+    setScore((current) => ({ ...current, lockedBet: current.bet }))
     setPhase('preview')
     setStatus(`Смотри внимательно: шарик у напёрстка «${cupHintLabel[previewCupPosition]}».`)
 
@@ -185,14 +188,15 @@ function App() {
     setScore((current) => ({
       wins: current.wins + (won ? 1 : 0),
       losses: current.losses + (won ? 0 : 1),
-      crebni: current.crebni + (won ? current.bet * 2 : -current.bet),
+      crebni: current.crebni + (won ? current.lockedBet * 2 : -current.lockedBet),
       bet: current.bet,
+      lockedBet: current.lockedBet,
     }))
     setHistory((current) => [
       {
         round,
-        bet: score.bet,
-        delta: won ? score.bet * 2 : -score.bet,
+        bet: score.lockedBet,
+        delta: won ? score.lockedBet * 2 : -score.lockedBet,
         result: won ? ('win' as const) : ('lose' as const),
       },
       ...current,
@@ -249,7 +253,7 @@ function App() {
                     )}
                     {phase === 'result' && selectedCupId === cup.id && (
                       <span className={`result-burst ${selectedCupId === ballCupId ? 'win' : 'lose'}`}>
-                        {selectedCupId === ballCupId ? `+${score.bet * 2}` : `-${score.bet}`}
+                        {selectedCupId === ballCupId ? `+${score.lockedBet * 2}` : `-${score.lockedBet}`}
                       </span>
                     )}
                   </button>
@@ -314,8 +318,9 @@ function App() {
                 step={5}
                 value={score.bet}
                 onChange={(e) => setScore((current) => ({ ...current, bet: Number(e.target.value) }))}
+                disabled={phase !== 'idle'}
               />
-              <div className="wallet-line">Ставка: <strong>{score.bet}</strong> гребней</div>
+              <div className="wallet-line">Ставка: <strong>{phase === 'result' ? score.lockedBet : score.bet}</strong> гребней</div>
             </div>
 
             <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow} disabled={!canPlay}>
