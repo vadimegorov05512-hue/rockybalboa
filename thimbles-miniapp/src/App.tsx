@@ -73,8 +73,8 @@ function App() {
     if (tg) {
       tg.ready()
       tg.expand()
-      tg.setHeaderColor('#120f1f')
-      tg.setBackgroundColor('#090613')
+      tg.setHeaderColor('#171513')
+      tg.setBackgroundColor('#111311')
     }
 
     prepareRound()
@@ -174,32 +174,24 @@ function App() {
       <div className="ambient ambient-left" />
       <div className="ambient ambient-right" />
 
-      <section className="hero-card">
-        <div className="hero-copy">
-          <p className="eyebrow">Rocky Balboa Mini App</p>
-          <h1>Напёрстки</h1>
-          <p className="subtitle">
-            Сначала я честно покажу, где лежит шарик. Потом напёрстки начнут двигаться, а ты попробуешь его не потерять.
-          </p>
+      <section className="hero-card mobile-hero">
+        <div className="hero-copy compact-hero-copy">
+          <div className="title-row">
+            <div>
+              <p className="eyebrow">Rocky Balboa Mini App</p>
+              <h1>Напёрстки</h1>
+            </div>
+            <div className="round-badge">Раунд {round}</div>
+          </div>
 
-          <div className="hero-badges">
-            <span className="hero-badge">Раунд {round}</span>
+          <div className="hero-badges compact-badges">
             <span className={`hero-badge phase-${phase}`}>{phaseLabel[phase]}</span>
             <span className="hero-badge accent">Точность {accuracy}</span>
           </div>
         </div>
-
-        <div className="hero-side">
-          <div className="hero-orb" />
-          <div className="hero-panel">
-            <span>Точность</span>
-            <strong>{accuracy}</strong>
-            <small>держи темп</small>
-          </div>
-        </div>
       </section>
 
-      <section className="scoreboard scoreboard-triple">
+      <section className="scoreboard scoreboard-triple mobile-stats">
         <article className="stat-card">
           <span>Побед</span>
           <strong>{score.wins}</strong>
@@ -214,8 +206,8 @@ function App() {
         </article>
       </section>
 
-      <section className="table-wrap">
-        <div className="status-card">
+      <section className="table-wrap mobile-stage-wrap">
+        <div className="status-card mobile-status-card">
           <div className={`status-dot ${phase}`} />
           <div>
             <p>{status}</p>
@@ -229,22 +221,27 @@ function App() {
           </div>
         </div>
 
-        <div className="table-frame">
+        <div className="table-frame mobile-table-frame">
           <div className="table-lights" />
-          <div className="table" style={{ backgroundImage: `linear-gradient(180deg, rgba(14, 15, 14, 0.22), rgba(10, 11, 10, 0.38)), url(${sceneBg})` }}>
+          <div
+            className="table mobile-table"
+            style={{ backgroundImage: `linear-gradient(180deg, rgba(14, 15, 14, 0.18), rgba(10, 11, 10, 0.34)), url(${sceneBg})` }}
+          >
             <div className="table-glow" />
 
             {(phase === 'idle' || phase === 'preview') && (
-              <div className="preview-banner">
+              <div className="preview-banner mobile-preview-banner">
                 Шарик у напёрстка: <strong>{cupHintLabel[previewCupPosition]}</strong>
               </div>
             )}
 
             {(phase === 'idle' || phase === 'preview' || phase === 'result') && (
-              <div className="ball" aria-hidden="true" style={{ ['--slot' as string]: ballPosition } as CSSProperties}>⚪</div>
+              <div className="ball" aria-hidden="true" style={{ ['--slot' as string]: ballPosition } as CSSProperties}>
+                ⚪
+              </div>
             )}
 
-            <div className="cups-stage">
+            <div className="cups-stage mobile-cups-stage">
               {cups.map((cup) => {
                 const revealed = phase === 'result' && cup.id === ballCupId
                 const wrongPick = phase === 'result' && selectedCupId === cup.id && selectedCupId !== ballCupId
@@ -252,14 +249,18 @@ function App() {
                 return (
                   <button
                     key={cup.id}
-                    className={`cup ${revealed ? 'revealed' : ''} ${wrongPick ? 'wrong' : ''} ${phase === 'shuffling' ? 'is-shuffling' : ''}`}
+                    className={`cup mobile-cup ${revealed ? 'revealed' : ''} ${wrongPick ? 'wrong' : ''} ${phase === 'shuffling' ? 'is-shuffling' : ''}`}
                     style={{ ['--x' as string]: cup.x } as CSSProperties}
                     onClick={() => handleGuess(cup.id)}
                     disabled={phase !== 'guess'}
                   >
                     <span className="cup-shadow" />
-                    <img className="thimble-image" src={thimbleImg} alt="" aria-hidden="true" />
-                    {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" aria-hidden="true">⚪</span>}
+                    <img className="thimble-image mobile-thimble-image" src={thimbleImg} alt="" aria-hidden="true" />
+                    {phase === 'result' && cup.id === ballCupId && (
+                      <span className="ball revealed-ball" aria-hidden="true">
+                        ⚪
+                      </span>
+                    )}
                   </button>
                 )
               })}
@@ -268,15 +269,15 @@ function App() {
         </div>
       </section>
 
-      <section className="controls">
-        <button className="primary" onClick={phase === 'result' ? nextRound : startShuffleFlow}>
+      <section className="controls mobile-controls">
+        <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow}>
           {phase === 'idle' && 'Старт'}
           {phase === 'preview' && 'Смотри'}
           {phase === 'shuffling' && 'Мешаю...'}
           {phase === 'guess' && 'Выбирай напёрсток'}
           {phase === 'result' && 'Следующий раунд'}
         </button>
-        <div className="hint-block">
+        <div className="hint-block mobile-hint-block">
           <span>Сейчас режим</span>
           <strong>{phaseLabel[phase]}</strong>
         </div>
