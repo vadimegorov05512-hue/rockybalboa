@@ -30,7 +30,7 @@ button {
 }
 
 .full-screen-app {
-  padding: 14px 12px calc(18px + env(safe-area-inset-bottom));
+  padding: 14px 12px calc(96px + env(safe-area-inset-bottom));
 }
 
 .scene-background,
@@ -340,9 +340,12 @@ h1 {
 }
 
 .persistent-tabs {
-  position: relative;
-  z-index: 2;
-  margin-top: 10px;
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 20;
+  margin-top: 0;
   padding: 4px;
   border-radius: 16px;
 }
@@ -430,6 +433,13 @@ h1 {
   .full-screen-app {
     max-width: 560px;
     margin: 0 auto;
+  }
+
+  .persistent-tabs {
+    left: 50%;
+    right: auto;
+    width: min(calc(100% - 24px), 536px);
+    transform: translateX(-50%);
   }
 
   .game-scene-block {
