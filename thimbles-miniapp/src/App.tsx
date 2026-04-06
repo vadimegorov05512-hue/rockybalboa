@@ -15,6 +15,8 @@ type CupState = {
 type Score = {
   wins: number
   losses: number
+  crebni: number
+  bet: number
 }
 
 const SHUFFLE_MOVES = 7
@@ -50,6 +52,8 @@ function App() {
   const [score, setScore] = useState<Score>({
     wins: 0,
     losses: 0,
+    crebni: 1000,
+    bet: 50,
   })
   const [, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
   const [, setShowIntro] = useState(true)
@@ -71,6 +75,8 @@ function App() {
     if (!total) return '0%'
     return `${Math.round((score.wins / total) * 100)}%`
   }, [score])
+
+  const canPlay = score.crebni >= score.bet
 
   useEffect(() => {
     const tg = window.Telegram?.WebApp
@@ -108,7 +114,7 @@ function App() {
   }
 
   const startShuffleFlow = () => {
-    if (phase === 'preview' || phase === 'shuffling') return
+    if (phase === 'preview' || phase === 'shuffling' || !canPlay) return
 
     clearTimer()
     setShowIntro(false)
@@ -167,6 +173,8 @@ function App() {
     setScore((current) => ({
       wins: current.wins + (won ? 1 : 0),
       losses: current.losses + (won ? 0 : 1),
+      crebni: current.crebni + (won ? current.bet : -current.bet),
+      bet: current.bet,
     }))
   }
 
@@ -229,6 +237,10 @@ function App() {
       ) : (
         <section className="stats-panel floating-panel">
           <div className="stats-grid-single">
+            <article className="stat-card premium">
+              <span>Гребни</span>
+              <strong>{score.crebni}</strong>
+            </article>
             <article className="stat-card">
               <span>Побед</span>
               <strong>{score.wins}</strong>
@@ -237,7 +249,7 @@ function App() {
               <span>Поражений</span>
               <strong>{score.losses}</strong>
             </article>
-            <article className="stat-card premium">
+            <article className="stat-card">
               <span>Точность</span>
               <strong>{accuracy}</strong>
             </article>
@@ -247,8 +259,23 @@ function App() {
       <div className="persistent-tabs floating-panel unified-bottom-dock">
         {!isStatsTab && (
           <>
-            <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow}>
-              {phase === 'idle' && 'Старт'}
+            <div className="bet-row">
+              {[10, 25, 50, 100].map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  className={`bet-chip ${score.bet === value ? 'active' : ''}`}
+                  onClick={() => setScore((current) => ({ ...current, bet: value }))}
+                >
+                  {value}
+                </button>
+              ))}
+            </div>
+
+            <div className="wallet-line">Гребни: <strong>{score.crebni}</strong>, ставка: <strong>{score.bet}</strong></div>
+
+            <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow} disabled={!canPlay}>
+              {phase === 'idle' && (canPlay ? 'Старт' : 'Не хватает гребней')}
               {phase === 'preview' && 'Смотри'}
               {phase === 'shuffling' && 'Мешаю...'}
               {phase === 'guess' && 'Выбирай напёрсток'}

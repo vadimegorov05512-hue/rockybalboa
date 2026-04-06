@@ -545,3 +545,32 @@ h1 {
     height: 32px;
   }
 }
+
+.bet-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.bet-chip {
+  min-height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: #eef2ec;
+}
+
+.bet-chip.active {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.22);
+  font-weight: 700;
+}
+
+.wallet-line {
+  color: #eef2ec;
+  font-size: 0.88rem;
+}
+
+.wallet-line strong {
+  color: #ffffff;
+}
