@@ -269,7 +269,11 @@ function App() {
                     disabled={phase !== 'guess'}
                   >
                     <span className="cup-shadow" />
-                    <span className="bucket-emoji" aria-hidden="true">🪣</span>
+                    <span className="thimble-emoji" aria-hidden="true">
+                      <span className="thimble-top" />
+                      <span className="thimble-body" />
+                      <span className="thimble-rim" />
+                    </span>
                     {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" aria-hidden="true">⚪</span>}
                   </button>
                 )
