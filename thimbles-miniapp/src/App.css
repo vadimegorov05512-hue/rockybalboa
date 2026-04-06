@@ -482,8 +482,8 @@ h1 {
   --slot-size: calc((100% - 36px) / 3);
   position: absolute;
   left: calc(18px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 14px);
-  bottom: 98px;
-  z-index: 1;
+  bottom: 46px;
+  z-index: 3;
   font-size: 1.6rem;
   line-height: 1;
   filter: brightness(1.08) drop-shadow(0 0 4px rgba(255, 255, 255, 0.2)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
@@ -492,7 +492,7 @@ h1 {
 
 .revealed-ball {
   position: absolute;
-  bottom: 38px;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
 }
