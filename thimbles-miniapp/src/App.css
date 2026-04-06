@@ -224,10 +224,10 @@ input {
 }
 
 .ball-image {
-  width: 30px;
-  height: 30px;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
+  filter: brightness(1.08) saturate(1.12) drop-shadow(0 0 8px rgba(123, 194, 255, 0.28)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
 }
 
 .revealed-ball {
@@ -460,8 +460,8 @@ input {
   }
 
   .ball-image {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
   }
 
   .result-burst {
@@ -496,8 +496,8 @@ input {
   }
 
   .ball-image {
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
   }
 }
 
@@ -543,7 +543,7 @@ input {
   }
 
   .ball-image {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
   }
 }
