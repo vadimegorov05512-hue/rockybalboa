@@ -316,9 +316,9 @@ h1 {
   border-radius: 20px;
   padding: 32px 18px 26px;
   min-height: 390px;
-  background:
-    radial-gradient(circle at 50% 8%, rgba(255, 255, 255, 0.05), transparent 24%),
-    linear-gradient(180deg, #1c1f1c 0%, #141714 38%, #121412 100%);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .table::before {
@@ -326,8 +326,8 @@ h1 {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.035), transparent 28%),
-    linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.18) 100%);
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.06), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.08) 45%, rgba(0, 0, 0, 0.22) 100%);
   pointer-events: none;
 }
 
@@ -336,18 +336,15 @@ h1 {
   position: absolute;
   inset-inline: 0;
   bottom: 0;
-  height: 118px;
-  background:
-    linear-gradient(180deg, rgba(70, 72, 68, 0.95), rgba(41, 44, 41, 1)),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 16%, transparent 84%, rgba(255, 255, 255, 0.03));
-  border-top: 1px solid rgba(215, 221, 212, 0.05);
+  height: 128px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(28, 19, 13, 0.12) 38%, rgba(24, 17, 12, 0.3) 100%);
 }
 
 .table-glow {
   position: absolute;
   inset: 18px 16% auto;
   height: 90px;
-  background: radial-gradient(circle, rgba(221, 225, 217, 0.08), transparent 62%);
+  background: radial-gradient(circle, rgba(255, 244, 210, 0.12), transparent 62%);
   filter: blur(18px);
 }
 
@@ -372,7 +369,7 @@ h1 {
   position: absolute;
   left: 18px;
   right: 18px;
-  bottom: 50px;
+  bottom: 34px;
   height: 220px;
   z-index: 2;
 }

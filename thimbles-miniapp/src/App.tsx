@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import thimbleImg from './assets/thimble-cutout.png'
+import sceneBg from './assets/street-scene.png'
 import './App.css'
 
 type Phase = 'idle' | 'preview' | 'shuffling' | 'guess' | 'result'
@@ -230,7 +231,7 @@ function App() {
 
         <div className="table-frame">
           <div className="table-lights" />
-          <div className="table">
+          <div className="table" style={{ backgroundImage: `linear-gradient(180deg, rgba(14, 15, 14, 0.22), rgba(10, 11, 10, 0.38)), url(${sceneBg})` }}>
             <div className="table-glow" />
 
             {(phase === 'idle' || phase === 'preview') && (
