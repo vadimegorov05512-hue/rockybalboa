@@ -4,6 +4,7 @@ import sceneBg from './assets/street-scene.png'
 import './App.css'
 
 type Phase = 'idle' | 'preview' | 'shuffling' | 'guess' | 'result'
+type Tab = 'game' | 'stats'
 
 type CupState = {
   id: number
@@ -41,6 +42,7 @@ function App() {
   const [cups, setCups] = useState<CupState[]>(initialCups)
   const [ballCupId, setBallCupId] = useState<number>(1)
   const [phase, setPhase] = useState<Phase>('idle')
+  const [activeTab, setActiveTab] = useState<Tab>('game')
   const [round, setRound] = useState(1)
   const [selectedCupId, setSelectedCupId] = useState<number | null>(null)
   const [score, setScore] = useState<Score>({
@@ -170,65 +172,52 @@ function App() {
   }
 
   return (
-    <main className="app-shell">
-      <div className="ambient ambient-left" />
-      <div className="ambient ambient-right" />
+    <main className="app-shell full-screen-app">
+      <div className="scene-background" style={{ backgroundImage: `url(${sceneBg})` }} />
+      <div className="scene-overlay" />
 
-      <section className="hero-card mobile-hero">
-        <div className="hero-copy compact-hero-copy">
-          <div className="title-row">
-            <div>
-              <p className="eyebrow">Rocky Balboa Mini App</p>
-              <h1>Напёрстки</h1>
-            </div>
-            <div className="round-badge">Раунд {round}</div>
-          </div>
-
-          <div className="hero-badges compact-badges">
-            <span className={`hero-badge phase-${phase}`}>{phaseLabel[phase]}</span>
-            <span className="hero-badge accent">Точность {accuracy}</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="scoreboard scoreboard-triple mobile-stats">
-        <article className="stat-card">
-          <span>Побед</span>
-          <strong>{score.wins}</strong>
-        </article>
-        <article className="stat-card">
-          <span>Поражений</span>
-          <strong>{score.losses}</strong>
-        </article>
-        <article className="stat-card premium">
-          <span>Точность</span>
-          <strong>{accuracy}</strong>
-        </article>
-      </section>
-
-      <section className="table-wrap mobile-stage-wrap">
-        <div className="status-card mobile-status-card">
-          <div className={`status-dot ${phase}`} />
+      <section className="top-tabs-card">
+        <div className="title-row mobile-title-row">
           <div>
-            <p>{status}</p>
-            <small>
-              {phase === 'idle'
-                ? 'Жми старт, чтобы увидеть шарик перед шафлом.'
-                : phase === 'guess'
-                  ? 'Тапни по напёрстку.'
-                  : 'Смотри внимательно на позицию шарика.'}
-            </small>
+            <p className="eyebrow">Rocky Balboa Mini App</p>
+            <h1>Напёрстки</h1>
           </div>
+          <div className="round-badge">Раунд {round}</div>
         </div>
 
-        <div className="table-frame mobile-table-frame">
-          <div className="table-lights" />
-          <div
-            className="table mobile-table"
-            style={{ backgroundImage: `linear-gradient(180deg, rgba(14, 15, 14, 0.18), rgba(10, 11, 10, 0.34)), url(${sceneBg})` }}
+        <div className="telegram-tabs">
+          <button
+            className={`telegram-tab ${activeTab === 'game' ? 'active' : ''}`}
+            onClick={() => setActiveTab('game')}
           >
-            <div className="table-glow" />
+            Игра
+          </button>
+          <button
+            className={`telegram-tab ${activeTab === 'stats' ? 'active' : ''}`}
+            onClick={() => setActiveTab('stats')}
+          >
+            Статистика
+          </button>
+        </div>
+      </section>
 
+      {activeTab === 'game' ? (
+        <section className="game-panel">
+          <div className="status-card mobile-status-card floating-panel">
+            <div className={`status-dot ${phase}`} />
+            <div>
+              <p>{status}</p>
+              <small>
+                {phase === 'idle'
+                  ? 'Жми старт, чтобы увидеть шарик перед шафлом.'
+                  : phase === 'guess'
+                    ? 'Тапни по напёрстку.'
+                    : 'Смотри внимательно на позицию шарика.'}
+              </small>
+            </div>
+          </div>
+
+          <div className="game-scene-block">
             {(phase === 'idle' || phase === 'preview') && (
               <div className="preview-banner mobile-preview-banner">
                 Шарик у напёрстка: <strong>{cupHintLabel[previewCupPosition]}</strong>
@@ -266,22 +255,39 @@ function App() {
               })}
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className="controls mobile-controls">
-        <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow}>
-          {phase === 'idle' && 'Старт'}
-          {phase === 'preview' && 'Смотри'}
-          {phase === 'shuffling' && 'Мешаю...'}
-          {phase === 'guess' && 'Выбирай напёрсток'}
-          {phase === 'result' && 'Следующий раунд'}
-        </button>
-        <div className="hint-block mobile-hint-block">
-          <span>Сейчас режим</span>
-          <strong>{phaseLabel[phase]}</strong>
-        </div>
-      </section>
+          <section className="controls mobile-controls floating-panel">
+            <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow}>
+              {phase === 'idle' && 'Старт'}
+              {phase === 'preview' && 'Смотри'}
+              {phase === 'shuffling' && 'Мешаю...'}
+              {phase === 'guess' && 'Выбирай напёрсток'}
+              {phase === 'result' && 'Следующий раунд'}
+            </button>
+            <div className="hint-block mobile-hint-block">
+              <span>Сейчас режим</span>
+              <strong>{phaseLabel[phase]}</strong>
+            </div>
+          </section>
+        </section>
+      ) : (
+        <section className="stats-panel floating-panel">
+          <div className="stats-grid-single">
+            <article className="stat-card">
+              <span>Побед</span>
+              <strong>{score.wins}</strong>
+            </article>
+            <article className="stat-card">
+              <span>Поражений</span>
+              <strong>{score.losses}</strong>
+            </article>
+            <article className="stat-card premium">
+              <span>Точность</span>
+              <strong>{accuracy}</strong>
+            </article>
+          </div>
+        </section>
+      )}
     </main>
   )
 }
