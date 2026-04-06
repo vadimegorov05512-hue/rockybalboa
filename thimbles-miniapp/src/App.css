@@ -187,50 +187,20 @@ h1 {
 .game-scene-block {
   position: relative;
   z-index: 2;
-  height: calc(100vh - 250px - env(safe-area-inset-bottom));
+  height: calc(100vh - 220px - env(safe-area-inset-bottom));
   min-height: 320px;
-  max-height: calc(100vh - 250px - env(safe-area-inset-bottom));
+  max-height: calc(100vh - 220px - env(safe-area-inset-bottom));
   margin-bottom: 8px;
   overflow: hidden;
 }
 
-.phase-banner {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 4;
-  width: calc(100% - 20px);
-  max-width: 360px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  text-align: center;
-  color: #f4f6f2;
-  background: rgba(20, 22, 20, 0.58);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  font-size: 0.88rem;
-  font-weight: 600;
-}
-
-.phase-banner.guess {
-  background: rgba(63, 79, 49, 0.58);
-}
-
-.phase-banner.win {
-  background: rgba(48, 110, 72, 0.72);
-}
-
-.phase-banner.lose {
-  background: rgba(126, 58, 58, 0.72);
-}
 
 
 .cups-stage {
   position: absolute;
   left: 8px;
   right: 8px;
-  bottom: 11vh;
+  bottom: 12vh;
   height: 228px;
   z-index: 2;
 }
@@ -287,7 +257,7 @@ h1 {
   --slot-size: calc((100% - 24px) / 3);
   position: absolute;
   left: calc(8px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 13px);
-  bottom: calc(10vh + 24px);
+  bottom: calc(12vh + 24px);
   z-index: 3;
   transition: left 0.42s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -426,9 +396,9 @@ h1 {
   }
 
   .game-scene-block {
-    height: calc(100vh - 252px - env(safe-area-inset-bottom));
+    height: calc(100vh - 222px - env(safe-area-inset-bottom));
     min-height: 300px;
-    max-height: calc(100vh - 252px - env(safe-area-inset-bottom));
+    max-height: calc(100vh - 222px - env(safe-area-inset-bottom));
   }
 
   .phase-banner {
@@ -449,7 +419,7 @@ h1 {
   }
 
   .cups-stage {
-    bottom: 11vh;
+    bottom: 12vh;
     height: 188px;
   }
 
@@ -462,7 +432,7 @@ h1 {
   }
 
   .ball {
-    bottom: calc(10vh + 22px);
+    bottom: calc(12vh + 22px);
   }
 
   .ball-image {
@@ -482,13 +452,13 @@ h1 {
 
 @media (min-width: 390px) and (max-width: 459px) {
   .game-scene-block {
-    height: calc(100vh - 250px - env(safe-area-inset-bottom));
+    height: calc(100vh - 220px - env(safe-area-inset-bottom));
     min-height: 320px;
-    max-height: calc(100vh - 250px - env(safe-area-inset-bottom));
+    max-height: calc(100vh - 220px - env(safe-area-inset-bottom));
   }
 
   .cups-stage {
-    bottom: 11vh;
+    bottom: 12vh;
     height: 216px;
   }
 
@@ -501,7 +471,7 @@ h1 {
   }
 
   .ball {
-    bottom: calc(10vh + 24px);
+    bottom: calc(12vh + 24px);
   }
 
   .ball-image {
@@ -530,10 +500,12 @@ h1 {
 
   .game-scene-block {
     min-height: 620px;
+    height: calc(100vh - 230px - env(safe-area-inset-bottom));
+    max-height: calc(100vh - 230px - env(safe-area-inset-bottom));
   }
 
   .cups-stage {
-    bottom: 92px;
+    bottom: 108px;
     height: 246px;
   }
 
@@ -546,7 +518,7 @@ h1 {
   }
 
   .ball {
-    bottom: 112px;
+    bottom: 128px;
   }
 
   .ball-image {
