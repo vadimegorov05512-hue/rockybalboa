@@ -138,12 +138,28 @@ input {
   overflow: hidden;
 }
 
+.hands-overlay {
+  position: absolute;
+  left: 50%;
+  bottom: 2vh;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: min(100%, 520px);
+  height: auto;
+  pointer-events: none;
+  opacity: 0.96;
+}
+
+.hands-overlay.is-shuffling {
+  animation: hands-sway 0.34s ease-in-out infinite alternate;
+}
+
 .start-instruction {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 4;
+  z-index: 5;
   width: calc(100% - 20px);
   max-width: 360px;
   padding: 10px 14px;
@@ -163,7 +179,7 @@ input {
   right: 8px;
   bottom: 12vh;
   height: 228px;
-  z-index: 2;
+  z-index: 4;
 }
 
 .cup {
@@ -416,6 +432,15 @@ input {
   }
 }
 
+@keyframes hands-sway {
+  from {
+    transform: translateX(-50%) rotate(-1deg) translateY(0);
+  }
+  to {
+    transform: translateX(-50%) rotate(1deg) translateY(-3px);
+  }
+}
+
 @keyframes burst-pop {
   0% {
     opacity: 0;
@@ -545,5 +570,9 @@ input {
   .ball-image {
     width: 40px;
     height: 40px;
+  }
+
+  .hands-overlay {
+    width: min(100%, 560px);
   }
 }
