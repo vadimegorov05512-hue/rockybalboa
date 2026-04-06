@@ -141,17 +141,17 @@ input {
 .hands-overlay {
   position: absolute;
   left: 50%;
-  bottom: 2vh;
+  bottom: 17vh;
   transform: translateX(-50%);
-  z-index: 3;
+  z-index: 5;
   width: min(100%, 520px);
   height: auto;
   pointer-events: none;
-  opacity: 0.96;
+  opacity: 0.98;
 }
 
 .hands-overlay.is-shuffling {
-  animation: hands-sway 0.34s ease-in-out infinite alternate;
+  animation: hands-sway 0.26s ease-in-out infinite alternate;
 }
 
 .start-instruction {
@@ -434,10 +434,10 @@ input {
 
 @keyframes hands-sway {
   from {
-    transform: translateX(-50%) rotate(-1deg) translateY(0);
+    transform: translateX(calc(-50% - 10px)) rotate(-2deg) translateY(0);
   }
   to {
-    transform: translateX(-50%) rotate(1deg) translateY(-3px);
+    transform: translateX(calc(-50% + 10px)) rotate(2deg) translateY(-2px);
   }
 }
 
@@ -574,5 +574,6 @@ input {
 
   .hands-overlay {
     width: min(100%, 560px);
+    bottom: 128px;
   }
 }
