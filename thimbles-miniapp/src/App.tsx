@@ -235,7 +235,7 @@ function App() {
               </div>
             )}
 
-            {(phase === 'idle' || phase === 'preview' || phase === 'result') && (
+            {(phase === 'idle' || phase === 'preview') && (
               <div className="ball" aria-hidden="true" style={{ ['--slot' as string]: ballPosition } as CSSProperties}>
                 ⚪
               </div>
