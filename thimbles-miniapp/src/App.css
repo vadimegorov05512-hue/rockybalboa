@@ -41,7 +41,7 @@ button {
 
 .scene-background {
   background-position: center top;
-  background-size: 112% auto;
+  background-size: auto 100%;
   background-repeat: no-repeat;
   transform: scale(1);
 }
@@ -385,8 +385,8 @@ h1 {
 
 @media (min-width: 721px) {
   .scene-background {
-    background-size: cover;
-    background-position: center;
+    background-size: auto 100%;
+    background-position: center top;
   }
 
   .full-screen-app {
