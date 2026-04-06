@@ -52,6 +52,7 @@ function App() {
   })
   const [, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
   const [showIntro, setShowIntro] = useState(true)
+  const resultWon = phase === 'result' && selectedCupId === ballCupId
 
   const timeoutRef = useRef<number | null>(null)
 
@@ -198,6 +199,13 @@ function App() {
           )}
 
           <div className="game-scene-block">
+            <div className={`phase-banner ${phase} ${phase === 'result' ? (resultWon ? 'win' : 'lose') : ''}`}>
+              {phase === 'idle' && 'Нажми «Старт», чтобы начать раунд'}
+              {phase === 'preview' && `Смотри: шарик под напёрстком «${cupHintLabel[previewCupPosition]}»`}
+              {phase === 'shuffling' && 'Напёрстки перемешиваются... следи внимательно'}
+              {phase === 'guess' && 'Выбирай напёрсток, где шарик'}
+              {phase === 'result' && (resultWon ? '✅ Ты выиграл, шарик угадан' : '❌ Мимо, шарик был в другом напёрстке')}
+            </div>
             {(phase === 'idle' || phase === 'preview') && (
               <div className="preview-banner mobile-preview-banner">
                 Шарик у напёрстка: <strong>{cupHintLabel[previewCupPosition]}</strong>

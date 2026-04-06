@@ -193,7 +193,7 @@ h1 {
 
 .preview-banner {
   position: absolute;
-  top: 0;
+  top: 44px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -211,6 +211,37 @@ h1 {
 
 .preview-banner strong {
   color: #f1f3ef;
+}
+
+.phase-banner {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  width: calc(100% - 20px);
+  max-width: 360px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  text-align: center;
+  color: #f4f6f2;
+  background: rgba(20, 22, 20, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.phase-banner.guess {
+  background: rgba(63, 79, 49, 0.58);
+}
+
+.phase-banner.win {
+  background: rgba(48, 110, 72, 0.72);
+}
+
+.phase-banner.lose {
+  background: rgba(126, 58, 58, 0.72);
 }
 
 .cups-stage {
