@@ -11,7 +11,10 @@
 html,
 body,
 #root {
+  width: 100%;
+  height: 100%;
   min-height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -19,6 +22,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background: #111311;
+  overflow: hidden;
+  touch-action: manipulation;
 }
 
 button {
@@ -27,7 +32,9 @@ button {
 
 .app-shell {
   position: relative;
+  height: 100vh;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .full-screen-app {
@@ -180,8 +187,11 @@ h1 {
 .game-scene-block {
   position: relative;
   z-index: 2;
-  min-height: 56vh;
+  height: calc(100vh - 250px - env(safe-area-inset-bottom));
+  min-height: 320px;
+  max-height: calc(100vh - 250px - env(safe-area-inset-bottom));
   margin-bottom: 8px;
+  overflow: hidden;
 }
 
 .phase-banner {
@@ -432,6 +442,12 @@ h1 {
     padding: 10px 8px calc(206px + env(safe-area-inset-bottom));
   }
 
+  .game-scene-block {
+    height: calc(100vh - 252px - env(safe-area-inset-bottom));
+    min-height: 300px;
+    max-height: calc(100vh - 252px - env(safe-area-inset-bottom));
+  }
+
   .phase-banner {
     width: calc(100% - 12px);
     font-size: 0.82rem;
@@ -479,7 +495,9 @@ h1 {
 
 @media (min-width: 390px) and (max-width: 459px) {
   .game-scene-block {
-    min-height: 56vh;
+    height: calc(100vh - 250px - env(safe-area-inset-bottom));
+    min-height: 320px;
+    max-height: calc(100vh - 250px - env(safe-area-inset-bottom));
   }
 
   .cups-stage {
@@ -504,6 +522,11 @@ h1 {
   .full-screen-app {
     max-width: 560px;
     margin: 0 auto;
+  }
+
+  .app-shell {
+    display: flex;
+    justify-content: center;
   }
 
   .persistent-tabs {
