@@ -405,7 +405,7 @@ h1 {
 
 .cup-shadow {
   position: absolute;
-  bottom: 6px;
+  bottom: 8px;
   width: 72%;
   height: 30px;
   border-radius: 50%;
@@ -413,64 +413,14 @@ h1 {
   filter: blur(10px);
 }
 
-.cup-body {
+.bucket-emoji {
   position: relative;
-  width: min(100%, 148px);
-  height: 172px;
-  border-radius: 46% 46% 30% 30% / 22% 22% 18% 18%;
-  background:
-    radial-gradient(circle at 32% 14%, rgba(255, 255, 255, 0.55), rgba(200, 204, 197, 0.18) 16%, transparent 28%),
-    linear-gradient(90deg, #515650 0%, #aeb5ad 17%, #6f766f 34%, #d8ddd6 48%, #666c65 66%, #a5ada4 82%, #424740 100%);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow:
-    inset 0 8px 14px rgba(255, 255, 255, 0.16),
-    inset 0 -18px 22px rgba(30, 32, 30, 0.42),
-    0 24px 30px rgba(0, 0, 0, 0.34);
-  overflow: hidden;
-  filter: saturate(0.78) brightness(0.92);
-}
-
-.cup-body::before {
-  content: '';
-  position: absolute;
-  inset: 8% 10% 24%;
-  background:
-    radial-gradient(circle, rgba(62, 66, 61, 0.82) 0 18%, rgba(185, 191, 184, 0.62) 19% 38%, transparent 39%) 0 0 / 24px 24px;
-  opacity: 0.74;
-  mix-blend-mode: multiply;
-}
-
-.cup-body::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(34, 37, 34, 0.08) 40%, rgba(18, 20, 18, 0.18) 100%),
-    radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.03), transparent 28%),
-    radial-gradient(circle at 72% 62%, rgba(0, 0, 0, 0.08), transparent 18%);
-}
-
-.cup-rim {
-  position: absolute;
-  bottom: 12px;
-  width: min(100%, 164px);
-  height: 20px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #454a44 0%, #cad0c9 25%, #6c726b 55%, #d7ddd7 76%, #494f48 100%);
-  box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.12),
-    inset 0 -4px 5px rgba(26, 28, 26, 0.35);
-}
-
-.cup-handle {
-  position: absolute;
-  top: 10px;
-  width: 58px;
-  height: 16px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #565c55 0%, #d8ddd7 48%, #595f59 100%);
-  z-index: 1;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+  z-index: 2;
+  font-size: clamp(4.2rem, 8vw, 5.8rem);
+  line-height: 1;
+  transform: translateY(2px);
+  filter: saturate(0.72) brightness(0.9) contrast(1.05) drop-shadow(0 14px 18px rgba(0, 0, 0, 0.36));
+  user-select: none;
 }
 
 .ball {
@@ -492,7 +442,7 @@ h1 {
 
 .revealed-ball {
   position: absolute;
-  bottom: 24px;
+  bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -501,12 +451,8 @@ h1 {
   transform: translateY(-14px);
 }
 
-.cup.revealed .cup-body {
-  filter: saturate(0.86) brightness(0.98);
-}
-
-.cup.wrong .cup-body {
-  filter: saturate(0.4) brightness(0.72);
+.cup.wrong .bucket-emoji {
+  filter: grayscale(0.45) brightness(0.72) drop-shadow(0 14px 18px rgba(0, 0, 0, 0.36));
 }
 
 .controls {
@@ -586,13 +532,8 @@ h1 {
     height: 180px;
   }
 
-  .cup-body {
-    width: min(100%, 112px);
-    height: 136px;
-  }
-
-  .cup-rim {
-    width: min(100%, 124px);
+  .bucket-emoji {
+    font-size: clamp(3.6rem, 15vw, 4.8rem);
   }
 
   .hint-block {
