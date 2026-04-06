@@ -40,10 +40,10 @@ button {
 }
 
 .scene-background {
-  background-position: center;
-  background-size: cover;
+  background-position: center top;
+  background-size: 112% auto;
   background-repeat: no-repeat;
-  transform: scale(1.04);
+  transform: scale(1);
 }
 
 .scene-overlay {
@@ -375,6 +375,11 @@ h1 {
 }
 
 @media (min-width: 721px) {
+  .scene-background {
+    background-size: cover;
+    background-position: center;
+  }
+
   .full-screen-app {
     max-width: 560px;
     margin: 0 auto;
