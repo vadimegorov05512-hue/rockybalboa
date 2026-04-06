@@ -66,10 +66,13 @@ button {
 
 .top-tabs-card {
   display: inline-flex;
-  border-radius: 14px;
-  padding: 6px 8px;
+  padding: 0;
   margin-bottom: 8px;
   margin-left: auto;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .compact-top-card {
