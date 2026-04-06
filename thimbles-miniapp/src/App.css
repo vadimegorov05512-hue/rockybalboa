@@ -301,8 +301,12 @@ h1 {
   margin-top: 2px;
 }
 
-.stats-bottom-tabs {
-  margin-top: 12px;
+.persistent-tabs {
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+  padding: 4px;
+  border-radius: 16px;
 }
 
 .primary {

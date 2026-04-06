@@ -245,23 +245,6 @@ function App() {
               {phase === 'result' && 'Следующий раунд'}
             </button>
 
-            <div className="telegram-tabs bottom-tabs">
-              <button
-                type="button"
-                className={`telegram-tab ${!isStatsTab ? 'active' : ''}`}
-                onClick={() => setActiveTab('game' as Tab)}
-              >
-                Игра
-              </button>
-              <button
-                type="button"
-                className={`telegram-tab ${isStatsTab ? 'active' : ''}`}
-                onClick={() => setActiveTab('stats' as Tab)}
-              >
-                Статистика
-              </button>
-            </div>
-
             <div className="hint-block mobile-hint-block">
               <span>Сейчас режим</span>
               <strong>{phaseLabel[phase]}</strong>
@@ -284,25 +267,24 @@ function App() {
               <strong>{accuracy}</strong>
             </article>
           </div>
-
-          <div className="telegram-tabs bottom-tabs stats-bottom-tabs">
-            <button
-              type="button"
-              className={`telegram-tab ${!isStatsTab ? 'active' : ''}`}
-              onClick={() => setActiveTab('game' as Tab)}
-            >
-              Игра
-            </button>
-            <button
-              type="button"
-              className={`telegram-tab ${isStatsTab ? 'active' : ''}`}
-              onClick={() => setActiveTab('stats' as Tab)}
-            >
-              Статистика
-            </button>
-          </div>
         </section>
       )}
+      <div className="telegram-tabs bottom-tabs persistent-tabs floating-panel">
+        <button
+          type="button"
+          className={`telegram-tab ${!isStatsTab ? 'active' : ''}`}
+          onClick={() => setActiveTab('game' as Tab)}
+        >
+          Игра
+        </button>
+        <button
+          type="button"
+          className={`telegram-tab ${isStatsTab ? 'active' : ''}`}
+          onClick={() => setActiveTab('stats' as Tab)}
+        >
+          Статистика
+        </button>
+      </div>
     </main>
   )
 }
