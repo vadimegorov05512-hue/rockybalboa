@@ -252,7 +252,7 @@ function App() {
             )}
 
             {(phase === 'idle' || phase === 'preview' || phase === 'result') && (
-              <div className="ball" style={{ ['--slot' as string]: ballPosition } as CSSProperties} />
+              <div className="ball" aria-hidden="true" style={{ ['--slot' as string]: ballPosition } as CSSProperties}>🟠</div>
             )}
 
             <div className="cups-stage">
@@ -270,7 +270,7 @@ function App() {
                   >
                     <span className="cup-shadow" />
                     <span className="bucket-emoji" aria-hidden="true">🪣</span>
-                    {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" />}
+                    {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" aria-hidden="true">🟠</span>}
                   </button>
                 )
               })}
