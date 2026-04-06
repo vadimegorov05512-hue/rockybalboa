@@ -190,6 +190,11 @@ function App() {
         <section className="game-panel">
 
           <div className="game-scene-block">
+            {phase === 'idle' && (
+              <div className="start-instruction">
+                Нажми «Старт», я покажу шарик, потом перемешаю напёрстки.
+              </div>
+            )}
 
             {(phase === 'idle' || phase === 'preview') && (
               <img className="ball ball-image" src={ballImg} alt="" aria-hidden="true" style={{ ['--slot' as string]: ballPosition } as CSSProperties} />
