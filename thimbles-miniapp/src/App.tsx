@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
-import thimbleImg from './assets/thimble-cutout.png'
+import thimbleImg from './assets/thimble-new-cutout.png'
 import sceneBg from './assets/street-scene-vertical.jpg'
 import './App.css'
 
