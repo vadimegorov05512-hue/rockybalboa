@@ -247,18 +247,18 @@ input {
 
 .result-burst {
   position: absolute;
-  top: -30px;
+  top: -54px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 6;
-  min-width: 92px;
-  padding: 10px 18px;
+  min-width: 128px;
+  padding: 14px 24px;
   border-radius: 999px;
-  font-size: 1.12rem;
+  font-size: 1.55rem;
   font-weight: 900;
   text-align: center;
   color: #fff;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
   animation: burst-pop 0.45s ease;
 }
 
@@ -465,9 +465,9 @@ input {
   }
 
   .result-burst {
-    min-width: 76px;
-    padding: 8px 14px;
-    font-size: 0.95rem;
+    min-width: 104px;
+    padding: 10px 18px;
+    font-size: 1.18rem;
   }
 }
 
