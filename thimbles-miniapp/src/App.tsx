@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import './App.css'
 
-type Phase = 'preview' | 'shuffling' | 'guess' | 'result'
+type Phase = 'idle' | 'preview' | 'shuffling' | 'guess' | 'result'
 
 type CupState = {
   id: number
@@ -17,7 +17,7 @@ type Score = {
 
 const SHUFFLE_MOVES = 7
 const SHUFFLE_STEP_MS = 420
-const PREVIEW_MS = 1400
+const PREVIEW_MS = 1500
 
 const initialCups = (): CupState[] => [
   { id: 0, x: 0 },
@@ -28,16 +28,19 @@ const initialCups = (): CupState[] => [
 const randomInt = (max: number) => Math.floor(Math.random() * max)
 
 const phaseLabel: Record<Phase, string> = {
+  idle: 'Старт',
   preview: 'Показ',
   shuffling: 'Шафл',
   guess: 'Выбор',
   result: 'Итог',
 }
 
+const cupHintLabel = ['Левый', 'Центральный', 'Правый']
+
 function App() {
   const [cups, setCups] = useState<CupState[]>(initialCups)
   const [ballCupId, setBallCupId] = useState<number>(1)
-  const [phase, setPhase] = useState<Phase>('preview')
+  const [phase, setPhase] = useState<Phase>('idle')
   const [round, setRound] = useState(1)
   const [selectedCupId, setSelectedCupId] = useState<number | null>(null)
   const [score, setScore] = useState<Score>({
@@ -46,7 +49,7 @@ function App() {
     streak: 0,
     bestStreak: 0,
   })
-  const [status, setStatus] = useState('Следи за шариком. Сейчас начнется перемешивание.')
+  const [status, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
 
   const timeoutRef = useRef<number | null>(null)
 
@@ -54,6 +57,11 @@ function App() {
     () => cups.find((cup) => cup.id === ballCupId)?.x ?? 1,
     [ballCupId, cups],
   )
+
+  const previewCupPosition = useMemo(() => {
+    const cup = cups.find((item) => item.id === ballCupId)
+    return cup?.x ?? 1
+  }, [ballCupId, cups])
 
   const accuracy = useMemo(() => {
     const total = score.wins + score.losses
@@ -70,10 +78,8 @@ function App() {
       tg.setHeaderColor('#120f1f')
       tg.setBackgroundColor('#090613')
     }
-  }, [])
 
-  useEffect(() => {
-    startRound()
+    prepareRound()
 
     return () => {
       if (timeoutRef.current) {
@@ -89,20 +95,25 @@ function App() {
     }
   }
 
-  const schedule = (callback: () => void, delay: number) => {
-    clearTimer()
-    timeoutRef.current = window.setTimeout(callback, delay)
-  }
-
-  const startRound = () => {
+  const prepareRound = () => {
     clearTimer()
     setCups(initialCups())
     setBallCupId(randomInt(3))
     setSelectedCupId(null)
-    setPhase('preview')
-    setStatus('Следи за шариком. Сейчас начнется перемешивание.')
+    setPhase('idle')
+    setStatus('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
+  }
 
-    schedule(() => {
+  const startShuffleFlow = () => {
+    if (phase === 'preview' || phase === 'shuffling') return
+
+    clearTimer()
+    setSelectedCupId(null)
+    setCups(initialCups())
+    setPhase('preview')
+    setStatus(`Смотри внимательно: шарик у напёрстка «${cupHintLabel[previewCupPosition]}».`)
+
+    timeoutRef.current = window.setTimeout(() => {
       shuffleSequence()
     }, PREVIEW_MS)
   }
@@ -110,7 +121,7 @@ function App() {
   const shuffleSequence = () => {
     let movesLeft = SHUFFLE_MOVES
     setPhase('shuffling')
-    setStatus('Перемешиваю... не теряй шарик из виду.')
+    setStatus('Пошло перемешивание. Следи за движением напёрстков.')
 
     const step = () => {
       setCups((current) => {
@@ -135,7 +146,7 @@ function App() {
         timeoutRef.current = window.setTimeout(step, SHUFFLE_STEP_MS)
       } else {
         setPhase('guess')
-        setStatus('Выбирай наперсток. Где шарик?')
+        setStatus('Теперь выбирай. Где шарик?')
       }
     }
 
@@ -148,7 +159,7 @@ function App() {
     const won = cupId === ballCupId
     setSelectedCupId(cupId)
     setPhase('result')
-    setStatus(won ? 'Есть попадание. Красиво.' : 'Мимо. Шарик был в другом наперстке.')
+    setStatus(won ? 'Есть попадание. Красиво.' : 'Мимо. Шарик был в другом напёрстке.')
     setScore((current) => {
       const streak = won ? current.streak + 1 : 0
       return {
@@ -162,7 +173,7 @@ function App() {
 
   const nextRound = () => {
     setRound((value) => value + 1)
-    startRound()
+    prepareRound()
   }
 
   return (
@@ -175,7 +186,7 @@ function App() {
           <p className="eyebrow">Rocky Balboa Mini App</p>
           <h1>Напёрстки</h1>
           <p className="subtitle">
-            Не про деньги. Про внимание, нервы и чувство ритма. Следи за шариком и не дай себя обмануть.
+            Сначала я честно покажу, где лежит шарик. Потом напёрстки начнут двигаться, а ты попробуешь его не потерять.
           </p>
 
           <div className="hero-badges">
@@ -219,7 +230,13 @@ function App() {
           <div className={`status-dot ${phase}`} />
           <div>
             <p>{status}</p>
-            <small>Тапни по напёрстку, когда начнется фаза выбора.</small>
+            <small>
+              {phase === 'idle'
+                ? 'Жми старт, чтобы увидеть шарик перед шафлом.'
+                : phase === 'guess'
+                  ? 'Тапни по напёрстку.'
+                  : 'Смотри внимательно на позицию шарика.'}
+            </small>
           </div>
         </div>
 
@@ -227,39 +244,50 @@ function App() {
           <div className="table-lights" />
           <div className="table">
             <div className="table-glow" />
-            {phase === 'preview' && <div className="ball" style={{ ['--slot' as string]: ballPosition }} />}
 
-            <div className="cups-row">
-              {cups
-                .slice()
-                .sort((a, b) => a.x - b.x)
-                .map((cup, index) => {
-                  const revealed = phase === 'result' && cup.id === ballCupId
-                  const wrongPick = phase === 'result' && selectedCupId === cup.id && selectedCupId !== ballCupId
+            {(phase === 'idle' || phase === 'preview') && (
+              <div className="preview-banner">
+                Шарик у напёрстка: <strong>{cupHintLabel[previewCupPosition]}</strong>
+              </div>
+            )}
 
-                  return (
-                    <button
-                      key={cup.id}
-                      className={`cup slot-${index} ${revealed ? 'revealed' : ''} ${wrongPick ? 'wrong' : ''} ${phase === 'shuffling' ? 'is-shuffling' : ''}`}
-                      onClick={() => handleGuess(cup.id)}
-                      disabled={phase !== 'guess'}
-                    >
-                      <span className="cup-shadow" />
-                      <span className="cup-handle" />
-                      <span className="cup-body" />
-                      <span className="cup-rim" />
-                      {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" />}
-                    </button>
-                  )
-                })}
+            {(phase === 'preview' || phase === 'result') && (
+              <div className="ball" style={{ ['--slot' as string]: ballPosition } as CSSProperties} />
+            )}
+
+            <div className="cups-stage">
+              {cups.map((cup) => {
+                const revealed = phase === 'result' && cup.id === ballCupId
+                const wrongPick = phase === 'result' && selectedCupId === cup.id && selectedCupId !== ballCupId
+
+                return (
+                  <button
+                    key={cup.id}
+                    className={`cup ${revealed ? 'revealed' : ''} ${wrongPick ? 'wrong' : ''} ${phase === 'shuffling' ? 'is-shuffling' : ''}`}
+                    style={{ ['--x' as string]: cup.x } as CSSProperties}
+                    onClick={() => handleGuess(cup.id)}
+                    disabled={phase !== 'guess'}
+                  >
+                    <span className="cup-shadow" />
+                    <span className="cup-handle" />
+                    <span className="cup-body" />
+                    <span className="cup-rim" />
+                    {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" />}
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>
       </section>
 
       <section className="controls">
-        <button className="primary" onClick={nextRound}>
-          {phase === 'result' ? 'Следующий раунд' : 'Начать заново'}
+        <button className="primary" onClick={phase === 'result' ? nextRound : startShuffleFlow}>
+          {phase === 'idle' && 'Старт'}
+          {phase === 'preview' && 'Смотри'}
+          {phase === 'shuffling' && 'Мешаю...'}
+          {phase === 'guess' && 'Выбирай напёрсток'}
+          {phase === 'result' && 'Следующий раунд'}
         </button>
         <div className="hint-block">
           <span>Сейчас режим</span>

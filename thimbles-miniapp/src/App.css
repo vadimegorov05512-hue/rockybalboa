@@ -130,6 +130,12 @@ h1 {
   color: #9dffca;
 }
 
+.phase-idle,
+.phase-preview {
+  background: rgba(126, 176, 255, 0.12);
+  color: #b6d1ff;
+}
+
 .phase-shuffling {
   background: rgba(255, 207, 92, 0.12);
   color: #ffd67a;
@@ -250,7 +256,7 @@ h1 {
   width: 12px;
   height: 12px;
   border-radius: 999px;
-  background: #f89fff;
+  background: #7bb6ff;
   box-shadow: 0 0 18px currentColor;
 }
 
@@ -291,7 +297,7 @@ h1 {
   overflow: hidden;
   border-radius: 26px;
   padding: 32px 18px 26px;
-  min-height: 380px;
+  min-height: 390px;
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 28%),
     linear-gradient(180deg, #24132d 0%, #120c1c 50%, #1c1026 100%);
@@ -325,26 +331,48 @@ h1 {
   filter: blur(20px);
 }
 
-.cups-row {
+.preview-banner {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(8, 10, 22, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f2eaff;
+  backdrop-filter: blur(12px);
+}
+
+.preview-banner strong {
+  color: #ffd978;
+}
+
+.cups-stage {
   position: absolute;
   left: 18px;
   right: 18px;
   bottom: 50px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  height: 220px;
   z-index: 2;
 }
 
 .cup {
-  position: relative;
+  --slot-width: calc((100% - 24px) / 3);
+  position: absolute;
+  left: calc(var(--x) * var(--slot-width) + var(--x) * 12px);
+  width: var(--slot-width);
   display: grid;
   place-items: center;
   height: 212px;
   border: 0;
   background: transparent;
   cursor: pointer;
-  transition: transform 0.3s ease, filter 0.25s ease;
+  transition:
+    left 0.42s cubic-bezier(0.25, 0.8, 0.25, 1),
+    transform 0.3s ease,
+    filter 0.25s ease;
 }
 
 .cup:disabled {
@@ -356,19 +384,7 @@ h1 {
 }
 
 .cup.is-shuffling {
-  animation: floaty 0.55s ease-in-out infinite alternate;
-}
-
-.slot-0.is-shuffling {
-  animation-delay: 0s;
-}
-
-.slot-1.is-shuffling {
-  animation-delay: 0.08s;
-}
-
-.slot-2.is-shuffling {
-  animation-delay: 0.16s;
+  animation: floaty 0.38s ease-in-out infinite alternate;
 }
 
 .cup-shadow {
@@ -429,7 +445,7 @@ h1 {
   left: calc(18px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 14px);
   bottom: 82px;
   z-index: 1;
-  transition: left 0.35s ease;
+  transition: left 0.42s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .revealed-ball {
@@ -493,7 +509,7 @@ h1 {
     transform: translateY(0);
   }
   to {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
@@ -522,13 +538,14 @@ h1 {
   }
 
   .table {
-    min-height: 340px;
+    min-height: 350px;
     padding-inline: 10px;
   }
 
-  .cups-row {
+  .cups-stage {
     left: 8px;
     right: 8px;
+    height: 190px;
   }
 
   .cup {
