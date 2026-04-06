@@ -31,7 +31,7 @@ button {
 }
 
 .full-screen-app {
-  padding: 12px 10px calc(176px + env(safe-area-inset-bottom));
+  padding: 12px 10px calc(196px + env(safe-area-inset-bottom));
 }
 
 .scene-background,
@@ -371,12 +371,14 @@ h1 {
 
 .unified-bottom-dock {
   padding: 10px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
 .dock-tabs {
   margin-top: 0;
+  flex: 0 0 auto;
 }
 
 .mobile-primary {
@@ -391,6 +393,7 @@ h1 {
   background: linear-gradient(180deg, #c8cec4 0%, #8f968d 100%);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
   cursor: pointer;
+  flex: 0 0 auto;
 }
 
 .hint-block {
@@ -412,6 +415,7 @@ h1 {
 
 .dock-hint-block {
   padding: 0 4px;
+  flex: 0 0 auto;
 }
 
 @keyframes floaty {
@@ -425,7 +429,7 @@ h1 {
 
 @media (max-width: 389px) {
   .full-screen-app {
-    padding: 10px 8px calc(170px + env(safe-area-inset-bottom));
+    padding: 10px 8px calc(206px + env(safe-area-inset-bottom));
   }
 
   .phase-banner {
