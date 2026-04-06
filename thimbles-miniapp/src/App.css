@@ -416,9 +416,9 @@ h1 {
 .bucket-emoji {
   position: relative;
   z-index: 2;
-  font-size: clamp(4.2rem, 8vw, 5.8rem);
+  font-size: clamp(5.4rem, 10vw, 7.2rem);
   line-height: 1;
-  transform: translateY(2px);
+  transform: translateY(4px);
   filter: saturate(0.72) brightness(0.9) contrast(1.05) drop-shadow(0 14px 18px rgba(0, 0, 0, 0.36));
   user-select: none;
 }
@@ -426,16 +426,16 @@ h1 {
 .ball {
   --slot-size: calc((100% - 36px) / 3);
   position: absolute;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 999px;
   background:
     radial-gradient(circle at 30% 30%, #fff5c1, #d6b46f 34%, #8a6630 74%);
   box-shadow:
     0 0 12px rgba(221, 186, 114, 0.18),
     0 6px 14px rgba(0, 0, 0, 0.3);
-  left: calc(18px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 11px);
-  bottom: 84px;
+  left: calc(18px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 12px);
+  bottom: 92px;
   z-index: 1;
   transition: left 0.42s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -533,7 +533,7 @@ h1 {
   }
 
   .bucket-emoji {
-    font-size: clamp(3.6rem, 15vw, 4.8rem);
+    font-size: clamp(4.5rem, 18vw, 5.8rem);
   }
 
   .hint-block {
