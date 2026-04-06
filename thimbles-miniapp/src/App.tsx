@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import thimbleImg from './assets/thimble-new-cutout.png'
 import sceneBg from './assets/street-scene-vertical.jpg'
 import ballImg from './assets/ball-cutout.png'
-import handsImg from './assets/hands-cutout.png'
+import leftHandImg from './assets/left-hand-cutout.png'
+import rightHandImg from './assets/right-hand-cutout.png'
 import './App.css'
 
 type Phase = 'idle' | 'preview' | 'shuffling' | 'guess' | 'result'
@@ -224,7 +225,8 @@ function App() {
       {!isHistoryTab && !isStatsTab ? (
         <section className="game-panel">
           <div className="game-scene-block">
-            <img className={`hands-overlay ${phase === 'shuffling' ? 'is-shuffling' : ''}`} src={handsImg} alt="" aria-hidden="true" />
+            <img className={`hands-overlay left-hand ${phase === 'shuffling' ? 'is-shuffling' : ''}`} src={leftHandImg} alt="" aria-hidden="true" />
+            <img className={`hands-overlay right-hand ${phase === 'shuffling' ? 'is-shuffling' : ''}`} src={rightHandImg} alt="" aria-hidden="true" />
             {phase === 'idle' && (
               <div className="start-instruction">
                 Нажми «Старт», я покажу шарик, потом перемешаю напёрстки.

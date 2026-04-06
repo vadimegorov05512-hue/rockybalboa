@@ -140,18 +140,29 @@ input {
 
 .hands-overlay {
   position: absolute;
-  left: 50%;
   bottom: 17vh;
-  transform: translateX(-50%);
   z-index: 5;
-  width: min(100%, 520px);
   height: auto;
   pointer-events: none;
   opacity: 0.98;
 }
 
-.hands-overlay.is-shuffling {
-  animation: hands-sway 0.26s ease-in-out infinite alternate;
+.left-hand {
+  left: 6%;
+  width: min(42%, 220px);
+}
+
+.right-hand {
+  right: 6%;
+  width: min(42%, 220px);
+}
+
+.left-hand.is-shuffling {
+  animation: left-hand-sway 0.24s ease-in-out infinite alternate;
+}
+
+.right-hand.is-shuffling {
+  animation: right-hand-sway 0.24s ease-in-out infinite alternate;
 }
 
 .start-instruction {
@@ -432,12 +443,21 @@ input {
   }
 }
 
-@keyframes hands-sway {
+@keyframes left-hand-sway {
   from {
-    transform: translateX(calc(-50% - 10px)) rotate(-2deg) translateY(0);
+    transform: translateX(-8px) rotate(-3deg) translateY(0);
   }
   to {
-    transform: translateX(calc(-50% + 10px)) rotate(2deg) translateY(-2px);
+    transform: translateX(8px) rotate(1deg) translateY(-2px);
+  }
+}
+
+@keyframes right-hand-sway {
+  from {
+    transform: translateX(8px) rotate(3deg) translateY(0);
+  }
+  to {
+    transform: translateX(-8px) rotate(-1deg) translateY(-2px);
   }
 }
 
@@ -573,7 +593,14 @@ input {
   }
 
   .hands-overlay {
-    width: min(100%, 560px);
     bottom: 128px;
+  }
+
+  .left-hand {
+    width: min(40%, 240px);
+  }
+
+  .right-hand {
+    width: min(40%, 240px);
   }
 }
