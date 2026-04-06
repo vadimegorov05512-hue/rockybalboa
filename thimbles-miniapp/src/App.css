@@ -244,22 +244,22 @@ input {
 .ball {
   --slot-size: calc((100% - 24px) / 3);
   position: absolute;
-  left: calc(8px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 13px);
-  bottom: calc(12vh + 24px);
-  z-index: 3;
+  left: calc(8px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 18px);
+  bottom: calc(12vh + 18px);
+  z-index: 4;
   transition: left 0.42s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .ball-image {
-  width: 38px;
-  height: 38px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
-  filter: brightness(1.08) saturate(1.12) drop-shadow(0 0 8px rgba(123, 194, 255, 0.28)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
+  filter: brightness(1.16) saturate(1.18) contrast(1.08) drop-shadow(0 0 12px rgba(255, 245, 210, 0.32)) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.3));
 }
 
 .revealed-ball {
   position: absolute;
-  bottom: 12px;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -505,8 +505,8 @@ input {
   }
 
   .ball-image {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
   }
 
   .result-burst {
@@ -541,8 +541,8 @@ input {
   }
 
   .ball-image {
-    width: 34px;
-    height: 34px;
+    width: 46px;
+    height: 46px;
   }
 }
 
@@ -588,8 +588,8 @@ input {
   }
 
   .ball-image {
-    width: 40px;
-    height: 40px;
+    width: 56px;
+    height: 56px;
   }
 
   .hands-overlay {
