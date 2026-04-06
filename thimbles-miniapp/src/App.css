@@ -66,8 +66,18 @@ button {
 
 .top-tabs-card {
   border-radius: 18px;
-  padding: 12px;
+  padding: 10px 12px;
   margin-bottom: 10px;
+}
+
+.compact-top-card {
+  min-height: 56px;
+}
+
+.top-strip {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .mobile-title-row {
@@ -78,20 +88,9 @@ button {
   margin-bottom: 10px;
 }
 
-.eyebrow {
-  margin: 0 0 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #9ca39a;
-  font-size: 0.65rem;
-}
-
+.eyebrow,
 h1 {
-  margin: 0;
-  font-size: clamp(1.8rem, 8vw, 2.4rem);
-  line-height: 0.96;
-  letter-spacing: -0.04em;
-  color: #f2f5ee;
+  display: none;
 }
 
 .round-badge {
@@ -296,6 +295,10 @@ h1 {
   gap: 10px;
   padding: 12px;
   border-radius: 16px;
+}
+
+.bottom-tabs {
+  margin-top: 2px;
 }
 
 .primary {

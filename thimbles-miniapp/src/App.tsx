@@ -43,13 +43,15 @@ function App() {
   const [ballCupId, setBallCupId] = useState<number>(1)
   const [phase, setPhase] = useState<Phase>('idle')
   const [activeTab, setActiveTab] = useState<Tab>('game')
+  const isStatsTab = activeTab === 'stats'
   const [round, setRound] = useState(1)
   const [selectedCupId, setSelectedCupId] = useState<number | null>(null)
   const [score, setScore] = useState<Score>({
     wins: 0,
     losses: 0,
   })
-  const [status, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
+  const [, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
+  const [showIntro, setShowIntro] = useState(true)
 
   const timeoutRef = useRef<number | null>(null)
 
@@ -108,6 +110,7 @@ function App() {
     if (phase === 'preview' || phase === 'shuffling') return
 
     clearTimer()
+    setShowIntro(false)
     setSelectedCupId(null)
     setCups(initialCups())
     setPhase('preview')
@@ -176,46 +179,23 @@ function App() {
       <div className="scene-background" style={{ backgroundImage: `url(${sceneBg})` }} />
       <div className="scene-overlay" />
 
-      <section className="top-tabs-card">
-        <div className="title-row mobile-title-row">
-          <div>
-            <p className="eyebrow">Rocky Balboa Mini App</p>
-            <h1>Напёрстки</h1>
-          </div>
+      <section className="top-tabs-card compact-top-card">
+        <div className="top-strip">
           <div className="round-badge">Раунд {round}</div>
-        </div>
-
-        <div className="telegram-tabs">
-          <button
-            className={`telegram-tab ${activeTab === 'game' ? 'active' : ''}`}
-            onClick={() => setActiveTab('game')}
-          >
-            Игра
-          </button>
-          <button
-            className={`telegram-tab ${activeTab === 'stats' ? 'active' : ''}`}
-            onClick={() => setActiveTab('stats')}
-          >
-            Статистика
-          </button>
         </div>
       </section>
 
-      {activeTab === 'game' ? (
+      {!isStatsTab ? (
         <section className="game-panel">
-          <div className="status-card mobile-status-card floating-panel">
-            <div className={`status-dot ${phase}`} />
-            <div>
-              <p>{status}</p>
-              <small>
-                {phase === 'idle'
-                  ? 'Жми старт, чтобы увидеть шарик перед шафлом.'
-                  : phase === 'guess'
-                    ? 'Тапни по напёрстку.'
-                    : 'Смотри внимательно на позицию шарика.'}
-              </small>
+          {showIntro && (
+            <div className="status-card mobile-status-card floating-panel">
+              <div className={`status-dot ${phase}`} />
+              <div>
+                <p>Нажми старт, я покажу шарик, а потом начну мешать напёрстки.</p>
+                <small>Инструкция показывается только один раз.</small>
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="game-scene-block">
             {(phase === 'idle' || phase === 'preview') && (
@@ -264,6 +244,24 @@ function App() {
               {phase === 'guess' && 'Выбирай напёрсток'}
               {phase === 'result' && 'Следующий раунд'}
             </button>
+
+            <div className="telegram-tabs bottom-tabs">
+              <button
+                type="button"
+                className={`telegram-tab ${!isStatsTab ? 'active' : ''}`}
+                onClick={() => setActiveTab('game' as Tab)}
+              >
+                Игра
+              </button>
+              <button
+                type="button"
+                className={`telegram-tab ${isStatsTab ? 'active' : ''}`}
+                onClick={() => setActiveTab('stats' as Tab)}
+              >
+                Статистика
+              </button>
+            </div>
+
             <div className="hint-block mobile-hint-block">
               <span>Сейчас режим</span>
               <strong>{phaseLabel[phase]}</strong>
