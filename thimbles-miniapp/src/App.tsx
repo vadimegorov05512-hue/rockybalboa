@@ -27,6 +27,13 @@ const initialCups = (): CupState[] => [
 
 const randomInt = (max: number) => Math.floor(Math.random() * max)
 
+const phaseLabel: Record<Phase, string> = {
+  preview: 'Показ',
+  shuffling: 'Шафл',
+  guess: 'Выбор',
+  result: 'Итог',
+}
+
 function App() {
   const [cups, setCups] = useState<CupState[]>(initialCups)
   const [ballCupId, setBallCupId] = useState<number>(1)
@@ -48,14 +55,20 @@ function App() {
     [ballCupId, cups],
   )
 
+  const accuracy = useMemo(() => {
+    const total = score.wins + score.losses
+    if (!total) return '0%'
+    return `${Math.round((score.wins / total) * 100)}%`
+  }, [score])
+
   useEffect(() => {
     const tg = window.Telegram?.WebApp
 
     if (tg) {
       tg.ready()
       tg.expand()
-      tg.setHeaderColor('#121826')
-      tg.setBackgroundColor('#0b1020')
+      tg.setHeaderColor('#120f1f')
+      tg.setBackgroundColor('#090613')
     }
   }, [])
 
@@ -154,73 +167,104 @@ function App() {
 
   return (
     <main className="app-shell">
-      <section className="topbar">
-        <div>
-          <p className="eyebrow">Telegram Mini App</p>
-          <h1>Наперстки</h1>
-          <p className="subtitle">Мини-игра на внимательность. Без денег, только азарт и реакция.</p>
+      <div className="ambient ambient-left" />
+      <div className="ambient ambient-right" />
+
+      <section className="hero-card">
+        <div className="hero-copy">
+          <p className="eyebrow">Rocky Balboa Mini App</p>
+          <h1>Напёрстки</h1>
+          <p className="subtitle">
+            Не про деньги. Про внимание, нервы и чувство ритма. Следи за шариком и не дай себя обмануть.
+          </p>
+
+          <div className="hero-badges">
+            <span className="hero-badge">Раунд {round}</span>
+            <span className={`hero-badge phase-${phase}`}>{phaseLabel[phase]}</span>
+            <span className="hero-badge accent">Точность {accuracy}</span>
+          </div>
         </div>
-        <div className="pill">Раунд {round}</div>
+
+        <div className="hero-side">
+          <div className="hero-orb" />
+          <div className="hero-panel">
+            <span>Лучшая серия</span>
+            <strong>{score.bestStreak}</strong>
+            <small>держи темп</small>
+          </div>
+        </div>
       </section>
 
       <section className="scoreboard">
-        <article>
+        <article className="stat-card">
           <span>Побед</span>
           <strong>{score.wins}</strong>
         </article>
-        <article>
+        <article className="stat-card">
           <span>Поражений</span>
           <strong>{score.losses}</strong>
         </article>
-        <article>
+        <article className="stat-card">
           <span>Серия</span>
           <strong>{score.streak}</strong>
         </article>
-        <article>
-          <span>Лучшая серия</span>
-          <strong>{score.bestStreak}</strong>
+        <article className="stat-card premium">
+          <span>Точность</span>
+          <strong>{accuracy}</strong>
         </article>
       </section>
 
       <section className="table-wrap">
         <div className="status-card">
           <div className={`status-dot ${phase}`} />
-          <p>{status}</p>
+          <div>
+            <p>{status}</p>
+            <small>Тапни по напёрстку, когда начнется фаза выбора.</small>
+          </div>
         </div>
 
-        <div className="table">
-          {phase === 'preview' && <div className="ball" style={{ ['--slot' as string]: ballPosition }} />}
+        <div className="table-frame">
+          <div className="table-lights" />
+          <div className="table">
+            <div className="table-glow" />
+            {phase === 'preview' && <div className="ball" style={{ ['--slot' as string]: ballPosition }} />}
 
-          <div className="cups-row">
-            {cups
-              .slice()
-              .sort((a, b) => a.x - b.x)
-              .map((cup) => {
-                const revealed = phase === 'result' && cup.id === ballCupId
-                const wrongPick = phase === 'result' && selectedCupId === cup.id && selectedCupId !== ballCupId
+            <div className="cups-row">
+              {cups
+                .slice()
+                .sort((a, b) => a.x - b.x)
+                .map((cup, index) => {
+                  const revealed = phase === 'result' && cup.id === ballCupId
+                  const wrongPick = phase === 'result' && selectedCupId === cup.id && selectedCupId !== ballCupId
 
-                return (
-                  <button
-                    key={cup.id}
-                    className={`cup ${revealed ? 'revealed' : ''} ${wrongPick ? 'wrong' : ''}`}
-                    onClick={() => handleGuess(cup.id)}
-                    disabled={phase !== 'guess'}
-                  >
-                    <span className="cup-handle" />
-                    <span className="cup-body" />
-                    {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" />}
-                  </button>
-                )
-              })}
+                  return (
+                    <button
+                      key={cup.id}
+                      className={`cup slot-${index} ${revealed ? 'revealed' : ''} ${wrongPick ? 'wrong' : ''} ${phase === 'shuffling' ? 'is-shuffling' : ''}`}
+                      onClick={() => handleGuess(cup.id)}
+                      disabled={phase !== 'guess'}
+                    >
+                      <span className="cup-shadow" />
+                      <span className="cup-handle" />
+                      <span className="cup-body" />
+                      <span className="cup-rim" />
+                      {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" />}
+                    </button>
+                  )
+                })}
+            </div>
           </div>
         </div>
       </section>
 
       <section className="controls">
         <button className="primary" onClick={nextRound}>
-          {phase === 'result' ? 'Следующий раунд' : 'Перезапустить'}
+          {phase === 'result' ? 'Следующий раунд' : 'Начать заново'}
         </button>
-        <p className="hint">Сейчас режим: <strong>{phase}</strong></p>
+        <div className="hint-block">
+          <span>Сейчас режим</span>
+          <strong>{phaseLabel[phase]}</strong>
+        </div>
       </section>
     </main>
   )
