@@ -26,7 +26,6 @@ button {
 .app-shell {
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
 }
 
 .full-screen-app {
@@ -35,7 +34,7 @@ button {
 
 .scene-background,
 .scene-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
 }
 
@@ -344,7 +343,7 @@ h1 {
   left: 12px;
   right: 12px;
   bottom: calc(12px + env(safe-area-inset-bottom));
-  z-index: 20;
+  z-index: 999;
   margin-top: 0;
   padding: 4px;
   border-radius: 16px;
