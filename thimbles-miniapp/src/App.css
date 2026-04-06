@@ -65,13 +65,15 @@ button {
 }
 
 .top-tabs-card {
+  display: inline-flex;
   border-radius: 14px;
-  padding: 8px 10px;
+  padding: 6px 8px;
   margin-bottom: 8px;
+  margin-left: auto;
 }
 
 .compact-top-card {
-  min-height: 40px;
+  min-height: auto;
 }
 
 .top-strip {
@@ -210,8 +212,8 @@ h1 {
   position: absolute;
   left: 8px;
   right: 8px;
-  bottom: 2vh;
-  height: 260px;
+  bottom: 8vh;
+  height: 250px;
   z-index: 2;
 }
 
@@ -267,7 +269,7 @@ h1 {
   --slot-size: calc((100% - 24px) / 3);
   position: absolute;
   left: calc(8px + var(--slot) * var(--slot-size) + (var(--slot-size) / 2) - 13px);
-  bottom: calc(2vh + 40px);
+  bottom: calc(8vh + 34px);
   z-index: 3;
   font-size: 1.45rem;
   line-height: 1;
@@ -399,6 +401,7 @@ h1 {
   }
 
   .cups-stage {
+    bottom: 56px;
     height: 300px;
   }
 
