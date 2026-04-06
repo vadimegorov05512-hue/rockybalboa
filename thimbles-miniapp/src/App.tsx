@@ -244,20 +244,7 @@ function App() {
             </div>
           </div>
 
-          <section className="controls mobile-controls floating-panel">
-            <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow}>
-              {phase === 'idle' && 'Старт'}
-              {phase === 'preview' && 'Смотри'}
-              {phase === 'shuffling' && 'Мешаю...'}
-              {phase === 'guess' && 'Выбирай напёрсток'}
-              {phase === 'result' && 'Следующий раунд'}
-            </button>
-
-            <div className="hint-block mobile-hint-block">
-              <span>Сейчас режим</span>
-              <strong>{phaseLabel[phase]}</strong>
-            </div>
-          </section>
+          <div className="game-bottom-spacer" />
         </section>
       ) : (
         <section className="stats-panel floating-panel">
@@ -277,21 +264,40 @@ function App() {
           </div>
         </section>
       )}
-      <div className="telegram-tabs bottom-tabs persistent-tabs floating-panel">
-        <button
-          type="button"
-          className={`telegram-tab ${!isStatsTab ? 'active' : ''}`}
-          onClick={() => setActiveTab('game' as Tab)}
-        >
-          Игра
-        </button>
-        <button
-          type="button"
-          className={`telegram-tab ${isStatsTab ? 'active' : ''}`}
-          onClick={() => setActiveTab('stats' as Tab)}
-        >
-          Статистика
-        </button>
+      <div className="persistent-tabs floating-panel unified-bottom-dock">
+        {!isStatsTab && (
+          <>
+            <button className="primary mobile-primary" onClick={phase === 'result' ? nextRound : startShuffleFlow}>
+              {phase === 'idle' && 'Старт'}
+              {phase === 'preview' && 'Смотри'}
+              {phase === 'shuffling' && 'Мешаю...'}
+              {phase === 'guess' && 'Выбирай напёрсток'}
+              {phase === 'result' && 'Следующий раунд'}
+            </button>
+
+            <div className="hint-block mobile-hint-block dock-hint-block">
+              <span>Сейчас режим</span>
+              <strong>{phaseLabel[phase]}</strong>
+            </div>
+          </>
+        )}
+
+        <div className="telegram-tabs bottom-tabs dock-tabs">
+          <button
+            type="button"
+            className={`telegram-tab ${!isStatsTab ? 'active' : ''}`}
+            onClick={() => setActiveTab('game' as Tab)}
+          >
+            Игра
+          </button>
+          <button
+            type="button"
+            className={`telegram-tab ${isStatsTab ? 'active' : ''}`}
+            onClick={() => setActiveTab('stats' as Tab)}
+          >
+            Статистика
+          </button>
+        </div>
       </div>
     </main>
   )

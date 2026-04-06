@@ -29,7 +29,7 @@ button {
 }
 
 .full-screen-app {
-  padding: 14px 12px calc(96px + env(safe-area-inset-bottom));
+  padding: 14px 12px calc(170px + env(safe-area-inset-bottom));
 }
 
 .scene-background,
@@ -345,8 +345,25 @@ h1 {
   bottom: calc(12px + env(safe-area-inset-bottom));
   z-index: 999;
   margin-top: 0;
-  padding: 4px;
-  border-radius: 16px;
+  border-radius: 18px;
+}
+
+.unified-bottom-dock {
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.dock-tabs {
+  margin-top: 0;
+}
+
+.dock-hint-block {
+  padding: 0 4px;
+}
+
+.game-bottom-spacer {
+  height: 110px;
 }
 
 .primary {
