@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
+import thimbleImg from './assets/thimble-reference.jpg'
 import './App.css'
 
 type Phase = 'idle' | 'preview' | 'shuffling' | 'guess' | 'result'
@@ -256,11 +257,7 @@ function App() {
                     disabled={phase !== 'guess'}
                   >
                     <span className="cup-shadow" />
-                    <span className="thimble-emoji" aria-hidden="true">
-                      <span className="thimble-top" />
-                      <span className="thimble-body" />
-                      <span className="thimble-rim" />
-                    </span>
+                    <img className="thimble-image" src={thimbleImg} alt="" aria-hidden="true" />
                     {phase === 'result' && cup.id === ballCupId && <span className="ball revealed-ball" aria-hidden="true">⚪</span>}
                   </button>
                 )
