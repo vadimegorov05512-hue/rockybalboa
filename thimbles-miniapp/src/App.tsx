@@ -52,7 +52,7 @@ function App() {
     losses: 0,
   })
   const [, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
-  const [showIntro, setShowIntro] = useState(true)
+  const [, setShowIntro] = useState(true)
   const resultWon = phase === 'result' && selectedCupId === ballCupId
 
   const timeoutRef = useRef<number | null>(null)
@@ -189,29 +189,15 @@ function App() {
 
       {!isStatsTab ? (
         <section className="game-panel">
-          {showIntro && (
-            <div className="status-card mobile-status-card floating-panel">
-              <div className={`status-dot ${phase}`} />
-              <div>
-                <p>Нажми старт, я покажу шарик, а потом начну мешать напёрстки.</p>
-                <small>Инструкция показывается только один раз.</small>
-              </div>
-            </div>
-          )}
 
           <div className="game-scene-block">
             <div className={`phase-banner ${phase} ${phase === 'result' ? (resultWon ? 'win' : 'lose') : ''}`}>
-              {phase === 'idle' && 'Нажми «Старт», чтобы начать раунд'}
-              {phase === 'preview' && `Смотри: шарик под напёрстком «${cupHintLabel[previewCupPosition]}»`}
-              {phase === 'shuffling' && 'Напёрстки перемешиваются... следи внимательно'}
-              {phase === 'guess' && 'Выбирай напёрсток, где шарик'}
-              {phase === 'result' && (resultWon ? '✅ Ты выиграл, шарик угадан' : '❌ Мимо, шарик был в другом напёрстке')}
+              {phase === 'idle' && 'Нажми «Старт», чтобы начать'}
+              {phase === 'preview' && `Шарик под напёрстком «${cupHintLabel[previewCupPosition]}»`}
+              {phase === 'shuffling' && 'Следи за движением напёрстков'}
+              {phase === 'guess' && 'Выбери напёрсток'}
+              {phase === 'result' && (resultWon ? '✅ Ты выиграл' : '❌ Мимо')}
             </div>
-            {(phase === 'idle' || phase === 'preview') && (
-              <div className="preview-banner mobile-preview-banner">
-                Шарик у напёрстка: <strong>{cupHintLabel[previewCupPosition]}</strong>
-              </div>
-            )}
 
             {(phase === 'idle' || phase === 'preview') && (
               <img className="ball ball-image" src={ballImg} alt="" aria-hidden="true" style={{ ['--slot' as string]: ballPosition } as CSSProperties} />
