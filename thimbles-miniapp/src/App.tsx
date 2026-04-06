@@ -11,8 +11,6 @@ type CupState = {
 type Score = {
   wins: number
   losses: number
-  streak: number
-  bestStreak: number
 }
 
 const SHUFFLE_MOVES = 7
@@ -46,8 +44,6 @@ function App() {
   const [score, setScore] = useState<Score>({
     wins: 0,
     losses: 0,
-    streak: 0,
-    bestStreak: 0,
   })
   const [status, setStatus] = useState('Нажми старт, я покажу шарик, а потом начну мешать напёрстки.')
 
@@ -160,15 +156,10 @@ function App() {
     setSelectedCupId(cupId)
     setPhase('result')
     setStatus(won ? 'Есть попадание. Красиво.' : 'Мимо. Шарик был в другом напёрстке.')
-    setScore((current) => {
-      const streak = won ? current.streak + 1 : 0
-      return {
-        wins: current.wins + (won ? 1 : 0),
-        losses: current.losses + (won ? 0 : 1),
-        streak,
-        bestStreak: Math.max(current.bestStreak, streak),
-      }
-    })
+    setScore((current) => ({
+      wins: current.wins + (won ? 1 : 0),
+      losses: current.losses + (won ? 0 : 1),
+    }))
   }
 
   const nextRound = () => {
@@ -199,14 +190,14 @@ function App() {
         <div className="hero-side">
           <div className="hero-orb" />
           <div className="hero-panel">
-            <span>Лучшая серия</span>
-            <strong>{score.bestStreak}</strong>
+            <span>Точность</span>
+            <strong>{accuracy}</strong>
             <small>держи темп</small>
           </div>
         </div>
       </section>
 
-      <section className="scoreboard">
+      <section className="scoreboard scoreboard-triple">
         <article className="stat-card">
           <span>Побед</span>
           <strong>{score.wins}</strong>
@@ -214,10 +205,6 @@ function App() {
         <article className="stat-card">
           <span>Поражений</span>
           <strong>{score.losses}</strong>
-        </article>
-        <article className="stat-card">
-          <span>Серия</span>
-          <strong>{score.streak}</strong>
         </article>
         <article className="stat-card premium">
           <span>Точность</span>
