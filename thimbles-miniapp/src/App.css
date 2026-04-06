@@ -148,13 +148,13 @@ input {
 }
 
 .left-hand {
-  left: 6%;
-  width: min(42%, 220px);
+  left: -2%;
+  width: min(38%, 200px);
 }
 
 .right-hand {
-  right: 6%;
-  width: min(42%, 220px);
+  right: -2%;
+  width: min(38%, 200px);
 }
 
 .left-hand.is-shuffling {
@@ -597,10 +597,12 @@ input {
   }
 
   .left-hand {
-    width: min(40%, 240px);
+    left: -1%;
+    width: min(34%, 220px);
   }
 
   .right-hand {
-    width: min(40%, 240px);
+    right: -1%;
+    width: min(34%, 220px);
   }
 }
